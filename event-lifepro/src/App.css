@@ -1,0 +1,94 @@
+.app{
+  min-height: 100vh;
+  background: rgb(78, 77, 78);
+}
+
+.Home{
+  min-height: 100vh;
+  background: rgb(78, 77, 78);
+  display: flex;
+}
+
+.Hostacc{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Attendacc{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Head{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.EventCustomise{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.QuestionAdder{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.QuestionCurrent{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.QuestionEditor{
+  border: 2px solid black;
+  background: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
