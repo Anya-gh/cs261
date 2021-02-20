@@ -6,7 +6,7 @@ function AttendeeAccess(){
     return (
         <div className="Attendacc">
             <h1>Attendee access</h1>
-            <p>
+            <section>
                 <h3>Access an event as attendee:</h3>
                 <br></br>
                 <br></br>
@@ -15,7 +15,7 @@ function AttendeeAccess(){
                 <p style={{textAlign: "center"}}><input type="text" placeholder="Enter your name here"></input></p>
                 <br></br>
                 <p style={{textAlign: "center"}}><button>Login</button></p>
-            </p>
+            </section>
         </div>
     );
 }
