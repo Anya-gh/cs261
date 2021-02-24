@@ -4,8 +4,23 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 //Instantiate PrismaClient
 
+async function keyexists(evID) {
+    //function to check if a exists
+    const keycheck = await prisma.event.findUnique({
+        where: {
+            eventID: evID,
+        }
+    })
+    if (keycheck) {
+        console.log(1);
+    } else {
+        console.log(2);
+    }
+}
+
 async function main() {
     //An async function to send queries to the database
+    await prisma.event.deleteMany({}); //clears the db to avoid hitting unique constraint errors
     console.log(5 + 5);
     const event_example = await prisma.event.create ({
         data: {
@@ -24,7 +39,8 @@ async function main() {
             },
         },
     })
-    console.log(event_example) //outputs what was added to the terminal (It works!)
+    console.log(event_example); //outputs what was added to the terminal (It works!)
+    await keyexists(1); //key validation example that checks if key exists in db
 }
 
 main()

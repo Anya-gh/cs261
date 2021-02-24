@@ -6,7 +6,6 @@ import AttendeeAccess from "./AttendeeAccess";
 import Head from "./Head";
 
 function Home(){
-//Java script Logic
 
   const [attKey, setAttKey] = useState("");
   const [hostKey, setHostKey] = useState([]);
@@ -20,6 +19,7 @@ function Home(){
   };
 
   return(
+routing-and-api
     //JSX aka HTML Code
     //Moved all of HostAccess.js and AttendeeAccess.js here for convenience (url params)
     //The components only contained DOM content anyway, so it makes no difference
@@ -54,6 +54,12 @@ function Home(){
           <Link to ={`/Feedback/${attKey}`}>Login</Link>
         </button>
       </div>
+
+    <div className="Home">
+      <Head />
+      <HostAccess />
+      <AttendeeAccess />
+master
     </div>
   );
 }
