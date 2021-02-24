@@ -19,7 +19,6 @@ function Home(){
   };
 
   return(
-routing-and-api
     //JSX aka HTML Code
     //Moved all of HostAccess.js and AttendeeAccess.js here for convenience (url params)
     //The components only contained DOM content anyway, so it makes no difference
@@ -54,12 +53,6 @@ routing-and-api
           <Link to ={`/Feedback/${attKey}`}>Login</Link>
         </button>
       </div>
-
-    <div className="Home">
-      <Head />
-      <HostAccess />
-      <AttendeeAccess />
-master
     </div>
   );
 }
