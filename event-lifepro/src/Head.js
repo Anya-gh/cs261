@@ -1,13 +1,12 @@
 import React from "react";
 import "./App.css";
 
-function Head(props){
+function Head(){
 
     return (
         <div className="Head">
-            <h1>{props.compname}</h1>
-      <h3>{props.slogan}</h3>
-      <br></br>
+            <h1>Event LiFePro</h1>
+            <h3>The live feedback provider</h3>
         </div>
     );
 }

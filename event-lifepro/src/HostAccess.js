@@ -8,7 +8,7 @@ function HostAccess(){
     return (
         <div className="Hostacc">
             <h1>Host access</h1>
-            <p style={{textAlign: "center"}}>
+            <section>
                 <h3>Access an event as host:</h3>
                 <br></br>
                 <br></br>
@@ -18,9 +18,9 @@ function HostAccess(){
                 <br></br>
                 <br></br>
                 <p style={{textAlign: "center"}}><button>
-                    <Link to="/EventCreate">Create New Event</Link>
+                    <Link to="/EventCreate">Create new event</Link>
                 </button></p>
-            </p>
+            </section>
         </div>
     );
 }
