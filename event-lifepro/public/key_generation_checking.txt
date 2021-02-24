@@ -1,0 +1,41 @@
+var keyLength = 7; //Global key length variable current means a000000 or h000000
+
+//keyIdentifer means either a or h for attendee or host
+//generates a key starting with a for attendee or h for host and then a random number of keylength - 1 length
+function generateKey(keyType) {
+  let key = ''
+  let keyIdentifier = keyType.charAt(0)
+  let keyValid = false
+  let randnum = 0
+  let randnumStr = ''
+  let multiple = Math.pow(10, keyLength -1)
+  while (!keyValid){
+      randnum = Math.floor((Math.random() * multiple) + 1)
+      randnumStr = randnum.toString();
+    	while (randnumStr.length < keyLength - 1) randnumStr = "0" + randnumStr; //pads zeros if neccessary
+      key = keyIdentifier + randnumStr
+      keyValid = true //check to see if key is not already in DB TODO
+  
+  }
+  return key
+}
+function validateKey(keyType, key) {
+  let keyIdentifier = keyType.charAt(0)
+  let keyValid = false
+  let randnum = 0
+  if (keyIdentifier !== key.charAt(0)){
+    throw 'Key is the wrong type';
+  }
+
+  if (isNaN(key.substring(1))){
+    throw 'Key is not in correct format. Key should be ' + key.charAt(0) + ' followed by ' + (keyLength - 1)  + ' numbers'
+  }
+  if (key.length !== keyLength){
+  	throw 'Key is incorrect length, should be ' + keyLength + ' characters long'
+  }
+  // if key not in db
+  // throw 'Key is not in database'
+  return true
+}
+console.log(generateKey('host'))
+console.log(validateKey('host', 'h293a99'))

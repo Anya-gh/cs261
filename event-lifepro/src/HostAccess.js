@@ -7,14 +7,20 @@ function HostAccess(){
 
     return (
         <div className="Hostacc">
-            <h2>Host access</h2>
-            <h3>Access an event as host:</h3>
-            <input type="text" placeholder="Enter key here"></input>
-            <button>Login</button>
-            <h3>OR</h3>
-            <button>
-                <Link to="/EventCreate">Create New Event</Link>
-            </button>
+            <h1>Host access</h1>
+            <section>
+                <h3>Access an event as host:</h3>
+                <br></br>
+                <br></br>
+                <p style={{textAlign: "center"}}><input type="text" placeholder="Enter key here"></input></p>
+                <br></br>
+                <p style={{textAlign: "center"}}><button>Login</button></p>
+                <br></br>
+                <br></br>
+                <p style={{textAlign: "center"}}><button>
+                    <Link to="/EventCreate">Create new event</Link>
+                </button></p>
+            </section>
         </div>
     );
 }

@@ -3,7 +3,9 @@ import './App.css';
 import Home from './Home';
 import EventCreate from './EventCreate';
 import TemplateEditor from './TemplateEditor';
-import {Route, Link} from 'react-router-dom';
+import Feedback from './Feedback';
+import Review from './Review';
+import {Route, Link, Switch} from 'react-router-dom';
 
 function App(){
 //Java script Logic
@@ -11,9 +13,13 @@ function App(){
   return(
     //JSX aka HTML Code
     <div className="app">
-      <Route exact path="/" component={Home}/>
-      <Route exact path="/EventCreate" component={EventCreate}/>
-      <Route exact path="/TemplateEditor" component={TemplateEditor}/>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route exact path="/EventCreate" component={EventCreate}/>
+        <Route exact path="/Review/:id" component={Review}/>
+        <Route exact path="/Feedback/:id/:name" component={Feedback}/>
+        <Route exact path="/TemplateEditor" component={TemplateEditor}/>
+      </Switch>
     </div>
   );
 }
