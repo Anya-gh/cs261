@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import Home from './Home';
 import EventCreate from './EventCreate';
+import TemplateEditor from './TemplateEditor';
 import Feedback from './Feedback';
 import Review from './Review';
 import {Route, Link, Switch} from 'react-router-dom';
@@ -17,6 +18,7 @@ function App(){
         <Route exact path="/EventCreate" component={EventCreate}/>
         <Route exact path="/Review/:id" component={Review}/>
         <Route exact path="/Feedback/:id/:name" component={Feedback}/>
+        <Route exact path="/TemplateEditor" component={TemplateEditor}/>
       </Switch>
     </div>
   );
