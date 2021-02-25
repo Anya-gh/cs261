@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+//required to connect to prisma client
+//allows you to create a client for multiple languages - not required for our case
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+//connects to database server of type postgresql with the url outlined in 
+//.env DATABASE_URL
+
+model Event {
+  eventID         Int @id 
+  eventObject     Json
+  templateObject  Json
+  forumObject     Json
+  analysisObject  Json
+
+  //one to many relation of eventID in Event with User, Key, Response
+  user            User[]
+  key             Key[]
+  response        Response[]
+}
+
+model User {
+  userID      Int @unique //one to many relation with Response
+  eventID     Int 
+  userObject  Json
+
+  //relates eventID to eventID in Event model (many to 1 as single eventID will be connected to many User)
+  event       Event @relation(fields: [eventID], references: [eventID])
+  response    Response[]
+}
+
+model Key {
+  keyID       Int @id
+  eventID     Int 
+  keyObject   Json
+
+  // many to one relation w/ Event through eventID
+  event       Event @relation(fields: [eventID], references: [eventID])
+}
+
+model Response {
+  responeID       Int @id //@id defines that the field is unique and is an id
+  eventID         Int 
+  userID          Int 
+  responseObject  Json 
+
+  //many to one relation w/ Event and many to one relation w/ User
+  event Event @relation(fields: [eventID], references: [eventID])
+  user User @relation(fields: [userID], references: [userID])
+}
+//outlines the table User in the postgres Database that prisma is connected to.
+//you can find the psql version of this in migrations folder
