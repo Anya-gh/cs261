@@ -27,7 +27,7 @@ model Event {
 }
 
 model User {
-  userID      Int @unique //one to many relation with Response
+  userID      Int @default(autoincrement()) @unique //one to many relation with Response
   eventID     Int 
   userObject  Json
 

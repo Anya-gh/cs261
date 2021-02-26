@@ -31,10 +31,27 @@ router.get('/key/:id', async (req, res) => {
             keyID: Number(id),
         },
         select: {
-            keyObject: true,
+            eventID: true,
         },
     })
-    res.json(keycheck);
+    res.json(keycheck); //returns eventID to front end
+});
+//on front end side, it gets the response that the key code is valid
+//then must execute the create user by passing the attendee name and eventID
+
+router.post('/create', async(req, res) => {
+    const { name, eventID } = req.body;
+    const evint = parseInt(eventID);
+    console.log(evint);
+    console.log(eventID);
+    //create user object function with name
+    const result = await prismadb.user.create({
+        data: {
+            eventID: evint,
+            userObject: {  name: name }, // replace this with created user object
+        }
+    })
+    res.json(result) // result should be a separate const that hold userID associated event info
 });
 
 module.exports = router;
