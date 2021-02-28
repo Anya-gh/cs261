@@ -59,4 +59,14 @@ router.post('/create', async(req, res) => {
     // null otherwise
 });
 
+
+//might put all the above into a single function. NOT WORKING:
+router.post('/', async(req, res) => {
+    const {name, attkey} = req.body
+    //keycheck function
+    //usernamecheck
+    //if not exist create user in db
+    //GET [user|event|forum|template] associated to eventID
+})
+
 module.exports = router;
