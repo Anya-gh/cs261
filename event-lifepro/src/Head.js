@@ -8,9 +8,9 @@ function Head(props){
     return (
         <div className="Head">
             <h1>
-                <Link to="/">{props.compname}</Link>
+                <Link to="/">Event LiFePro</Link>
             </h1>
-      <h3>{props.slogan}</h3>
+      <h3>The live feedback provider</h3>
       <br></br>
         </div>
     );
