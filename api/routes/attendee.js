@@ -7,6 +7,7 @@ var prismadb = new PrismaClient();
 var app = express()
 app.use(express.json())
 
+//---vvv REDUNDANT vvv---
 //GET eventID on checking a key, otherwise returns null
 router.get('/key/:id', async (req, res) => {
     const { id } = req.params;
@@ -27,7 +28,6 @@ router.get('/key/:id', async (req, res) => {
 router.get('/check/:username', async (req, res) => {
     const { username } = req.params;
     var json = { name: username };
-    console.log(json); // test
     // ----- IMPORTANT-----
     // may need the change the above var json based on what the userObject contains
     // also the only query possible on json type is equal/not so format must be correct
@@ -59,15 +59,18 @@ router.post('/create', async(req, res) => {
     // result should be a separate const that hold userID associated event info
     // null otherwise
 });
+//---^^^ REDUNDANT ^^^---
+
 
 // function that retrieves [user|event|forum|template] objects associated to user
-async function userRetrieve(json) {
+async function userRetrieve(json, evID) {
     const reqObject = prismadb.user.findFirst({
         // find unique does not work when dealing with json
         where: {
             userObject: {
                 equals: json,
             },
+            eventID: evID,
         },
         select:{
             userObject: true,
@@ -83,12 +86,17 @@ async function userRetrieve(json) {
     return reqObject;
 }
 
-//might put all the above into a single function. WORKING:
+/**uses the above async function to do the same task as the other GET/POST requests in one POST request
+attendee username and attendee key is input to return userObject (create if required), eventObject,
+templateObject and forumObject*/
 router.post('/', async(req, res) => {
     const {username, attkey} = req.body;
     //keycheck function
     const intkey = parseInt(attkey);
     let json = {name: username};
+    // ----- IMPORTANT-----
+    // may need the change the above var json based on what the userObject contains
+    // also the only query possible on json type is equal/not so format must be correct
     const keycheck = await prismadb.key.findUnique({
         where: {
             keyID: intkey,
@@ -102,21 +110,22 @@ router.post('/', async(req, res) => {
         res.json("The key you have entered does not exist");
     }else {
         //usernamecheck
-        var usercheck = await userRetrieve(json);
+        var usercheck = await userRetrieve(json, keycheck.eventID);
         //if not exist create user in db
         if (usercheck == null) {
             //create user object function with name
             const usercreate = await prismadb.user.create({
                 data: {
                     eventID: keycheck.eventID,
-                    userObject: json, // replace this with created user object
+                    userObject: json, // may need to change this if userObject is designed differently
                 },
                 //maybe include select to get the userobject   
             });
-            usercheck = await userRetrieve(json)
+            usercheck = await userRetrieve(json, keycheck.eventID)
         }
         res.json(usercheck);
     }
+
 })
 
 module.exports = router;
