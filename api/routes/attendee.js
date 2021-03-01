@@ -26,7 +26,8 @@ router.get('/key/:id', async (req, res) => {
 // checks if a name provided exist, GET's userObject if so, otherwise null
 router.get('/check/:username', async (req, res) => {
     const { username } = req.params;
-    var json = { name: username }
+    var json = { name: username };
+    console.log(json); // test
     // ----- IMPORTANT-----
     // may need the change the above var json based on what the userObject contains
     // also the only query possible on json type is equal/not so format must be correct
@@ -59,14 +60,63 @@ router.post('/create', async(req, res) => {
     // null otherwise
 });
 
+// function that retrieves [user|event|forum|template] objects associated to user
+async function userRetrieve(json) {
+    const reqObject = prismadb.user.findFirst({
+        // find unique does not work when dealing with json
+        where: {
+            userObject: {
+                equals: json,
+            },
+        },
+        select:{
+            userObject: true,
+            event: {
+                select: {
+                    eventObject: true,
+                    templateObject: true,
+                    forumObject: true,
+                },
+            },
+        },
+    });
+    return reqObject;
+}
 
-//might put all the above into a single function. NOT WORKING:
+//might put all the above into a single function. WORKING:
 router.post('/', async(req, res) => {
-    const {name, attkey} = req.body
+    const {username, attkey} = req.body;
     //keycheck function
-    //usernamecheck
-    //if not exist create user in db
-    //GET [user|event|forum|template] associated to eventID
+    const intkey = parseInt(attkey);
+    let json = {name: username};
+    const keycheck = await prismadb.key.findUnique({
+        where: {
+            keyID: intkey,
+        },
+        select: {
+            eventID: true,
+        },
+    });
+
+    if (keycheck == null){
+        res.json("The key you have entered does not exist");
+    }else {
+        //usernamecheck
+        var usercheck = await userRetrieve(json);
+        //if not exist create user in db
+        if (usercheck == null) {
+            //create user object function with name
+            const usercreate = await prismadb.user.create({
+                data: {
+                    eventID: keycheck.eventID,
+                    userObject: json, // replace this with created user object
+                },
+                //maybe include select to get the userobject   
+            });
+            usercheck = await userRetrieve(json)
+        }
+        res.json(usercheck);
+    }
 })
 
 module.exports = router;
