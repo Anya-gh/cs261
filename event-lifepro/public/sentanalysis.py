@@ -6,6 +6,19 @@ def getPolarity(inputList):
     input = ' '.join(sys.argv[2:])
     output = analyzer.polarity_scores(input)
     return output
+#
+#
+#
+#to be added - takes string input, space separated
+def getPolarity(inputString):
+    analyzer = SentimentIntensityAnalyzer()
+    return analyzer.polarity_scores(inputString)
+#just this
+#
+#
+#
+
+
 
 def getPositiveWordList(inputList):
     input = ' '.join(sys.argv[2:])
