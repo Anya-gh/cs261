@@ -12,10 +12,10 @@ function QuestionEditor(){
     //JSX aka HTML Code
     <div className="QuestionEditor">
         {/* This is how to comment in JSX*/}
-        <label for="Response Type">*Question*</label>
-        <label for="Response Type">New Question: </label>
+        <label htmlFor="Response Type">*Question*</label>
+        <label htmlFor="Response Type">New Question: </label>
         <input type="text"></input>
-        <label for="Response Type">Response type for the new question: </label>
+        <label htmlFor="Response Type">Response type for the new question: </label>
         <select name="Response Type" id="Response Type">
               <option value="1">Text</option>
               <option value="2">Select</option>

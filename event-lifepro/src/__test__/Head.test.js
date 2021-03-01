@@ -9,7 +9,7 @@ describe("<Head />", () => {
     });
     it("renders content", () => {
         const comp = render(<Router><Head /></Router>);
-        expect(comp.getByText(/Event LiFePro/).tagName).toBe("H1");
+        expect(comp.getByRole("link", {name: "Event LiFePro"})).not.toBeNull();
         expect(comp.getByText(/The live feedback provider/).tagName).toBe("H3");
     });
 });
