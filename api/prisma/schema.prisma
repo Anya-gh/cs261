@@ -14,7 +14,7 @@ datasource db {
 //.env DATABASE_URL
 
 model Event {
-  eventID         Int @id 
+  eventID         Int @id @default(autoincrement())
   eventObject     Json
   templateObject  Json
   forumObject     Json
@@ -37,16 +37,16 @@ model User {
 }
 
 model Key {
-  keyID       Int @id
+  keyID       Int @id @default(autoincrement())
   eventID     Int 
   keyObject   Json
 
-  // many to one relation w/ Event through eventID
+  // many to one relation w/ Event through eventID as host and attendee have separate key
   event       Event @relation(fields: [eventID], references: [eventID])
 }
 
 model Response {
-  responeID       Int @id //@id defines that the field is unique and is an id
+  responeID       Int @id @default(autoincrement()) //@id defines that the field is unique and is an id
   eventID         Int 
   userID          Int 
   responseObject  Json 
