@@ -6,7 +6,7 @@ import Head from "./Head";
 function Home(){
 
   const [attKey, setAttKey] = useState("");
-  const [hostKey, setHostKey] = useState([]);
+  const [hostKey, setHostKey] = useState("");
 
   const updateAttKey = e => {
     setAttKey(e.target.value);
