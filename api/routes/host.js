@@ -11,6 +11,7 @@ app.use(express.json());
 //send all contents in event table
 router.get('/key/:id', async (req, res) => {
     const { id } = req.params;
+    let exist = false;
     const keycheck = await prismadb.key.findUnique({
         where: {
             keyID: Number(id),
@@ -19,10 +20,33 @@ router.get('/key/:id', async (req, res) => {
             event: true,
         },
     })
-    res.json(keycheck); //returns eventID to front end
+    if (keycheck != null) {
+        exist = true;
+    }
+    res.json({exist, keycheck}); //returns eventID and all related objects to front end
 });
 
-/** host create event
+router.get('/review/:evID', async (req,res) => {
+    const { evID } = req.params;
+    const reviewObjs = await prismadb.event.findUnique ({
+        where: {
+            eventID: Number(evID),
+        },
+        select: {
+            eventObject: true,
+            analysisObject:true,
+            response: {
+                select: {
+                    responseObject: true,
+                },
+            },
+        },
+    });
+    res.json(reviewObjs);
+});
+
+
+/** REDUNDANT host create event 
 // passed information: Title, Host name, event time (start/finish),
 event type, analysis frequency, template type - should be after initial
 creation? */

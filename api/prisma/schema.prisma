@@ -37,7 +37,7 @@ model User {
 }
 
 model Key {
-  keyID       Int @id @default(autoincrement())
+  keyID       Int @id 
   eventID     Int 
   keyObject   Json
 
@@ -46,7 +46,7 @@ model Key {
 }
 
 model Response {
-  responeID       Int @id @default(autoincrement()) //@id defines that the field is unique and is an id
+  responseID       Int @id @default(autoincrement()) //@id defines that the field is unique and is an id
   eventID         Int 
   userID          Int 
   responseObject  Json 
