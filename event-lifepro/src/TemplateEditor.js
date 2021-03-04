@@ -12,7 +12,7 @@ function TemplateEditor(){
     //JSX aka HTML Code
     <div className="TemplateEditor">
       {/* This is how to comment in JSX*/}
-      <header><Head compname="Event LiFePro" slogan="The live feedback provider"/></header>
+      <header><Head /></header>
       
       {/*Question section*/}
 
