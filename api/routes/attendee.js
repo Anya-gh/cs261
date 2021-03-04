@@ -128,6 +128,7 @@ router.post('/', async(req, res) => {
 
 })
 
+//retrieves [event, template] objects given an event id
 router.get('/feedback/:evID', async(req, res) => {
     const { evID } = req.params;
     const feedQuery = await prismadb.event.findUnique({
