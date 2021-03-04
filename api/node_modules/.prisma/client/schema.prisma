@@ -2,6 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native"]  
 }
 //required to connect to prisma client
 //allows you to create a client for multiple languages - not required for our case
@@ -46,7 +47,7 @@ model Key {
 }
 
 model Response {
-  responeID       Int @id //@id defines that the field is unique and is an id
+  responseID       Int @id //@id defines that the field is unique and is an id
   eventID         Int 
   userID          Int 
   responseObject  Json 
