@@ -41,7 +41,7 @@ async function main() {
     })
     console.log(event_example); //outputs what was added to the terminal (It works!)
     await keyexists(1); //key validation example that checks if key exists in db
-    
+
     const key_example = await prisma.key.create ({
         data: {
             keyID: 1,
