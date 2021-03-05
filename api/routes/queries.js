@@ -24,7 +24,7 @@ router.get('/event/:evID', async (req, res) => {
             eventObject: true,
         },
     });
-    res.json(eventcheck)
+    res.json(eventcheck.eventObject)
 });
 
 router.get('/template/:evID', async (req, res) => {
@@ -37,7 +37,7 @@ router.get('/template/:evID', async (req, res) => {
             templateObject: true,
         },
     });
-    res.json(eventcheck)
+    res.json(eventcheck.templateObject)
 });
 
 router.get('/forum/:evID', async (req, res) => {
@@ -50,7 +50,7 @@ router.get('/forum/:evID', async (req, res) => {
             forumObject: true,
         },
     });
-    res.json(eventcheck)
+    res.json(eventcheck.forumObject)
 });
 
 router.get('/analysis/:evID', async (req, res) => {
@@ -63,7 +63,7 @@ router.get('/analysis/:evID', async (req, res) => {
             analysisObject: true,
         },
     });
-    res.json(eventcheck)
+    res.json(eventcheck.analysisObject)
 });
 
 router.get('/feedback/:evID', async (req, res) => {
@@ -80,7 +80,7 @@ router.get('/feedback/:evID', async (req, res) => {
             },
         },
     });
-    res.json(eventcheck)
+    res.json(eventcheck.responseObject)
 });
 
 module.exports = router;
