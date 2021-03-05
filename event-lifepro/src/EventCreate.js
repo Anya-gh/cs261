@@ -120,10 +120,11 @@ function EventCreate() {
         //JSX aka HTML Code
         <div className="EventCreate">
             {/* This is how to comment in JSX*/}
-            <Head compname="Event LiFePro" slogan="The live feedback provider" />
+            <Head/>
 
-            <h1>Create event</h1>
-            <section style={{ textAlign: "center" }}>
+            <h1 style={{ textAlign:"center", width: "100vw"}}>Create event</h1>
+            <br></br>
+            <section style={{ textAlign: "center", width: "80vw" }}>
                 <fieldset>
                     <legend>Event information</legend>
                     <br></br>
@@ -140,7 +141,8 @@ function EventCreate() {
                     <br></br><br></br>
                 </fieldset>
             </section>
-            <section style={{ textAlign: "center" }}>
+            <br></br>
+            <section style={{ textAlign: "center", width: "80vw" }}>
                 <fieldset>
                     <legend>Event settings</legend>
                     <br></br>
@@ -162,45 +164,50 @@ function EventCreate() {
                     <br></br><br></br>
                 </fieldset>
             </section>
-            <section style={{ textAlign: "center" }}>
-                <label htmlFor="Template">Import a Template: </label>
-                <select onChange={updateId} name="Template" id="Template">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                <br></br>
-                <button onclick={updateTemplate}>Import Template</button>
-                <br></br>
+            <br></br>
+            <section style={{ textAlign: "center", width: "80vw" }}>
+                <fieldset>
+                    <legend>Template settings</legend>
+                    <br></br>
+                    <label htmlFor="Template">Import a Template: </label>
+                    <select onChange={updateId} name="Template" id="Template">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br></br>
+                    <button onClick={updateTemplate}>Import Template</button>
+                    <br></br><br></br>
 
-                {/*Question section*/}
+                    {/*Question section*/}
 
-                {/* Current Questions */}
-                <label><u>Current questions in template:</u></label>
-                <br></br>
-                <input onChange={updateQuestion1} name="question1string" id="question1string" type="text" placeholder={question1}></input>
-                <br></br>
-                <input onChange={updateQuestion2} name="question2string" id="question2string" type="text" placeholder={question2}></input>
-                <br></br>
-                <input onChange={updateQuestion3} name="question3string" id="question3string" type="text" placeholder={question3}></input>
-                <br></br>
-                <input onChange={updateQuestion4} name="question4string" id="question4string" type="text" placeholder={question4}></input>
-                <br></br>
-                <input onChange={updateQuestion5} name="question5string" id="question5string" type="text" placeholder={question5}></input>
-                <br></br>
-                <input onChange={updateQuestion6} name="question6string" id="question6string" type="text" placeholder={question6}></input>
-                <br></br>
-                <input onChange={updateQuestion7} name="question7string" id="question7string" type="text" placeholder={question7}></input>
-                <br></br>
-                <input onChange={updateQuestion8} name="question8string" id="question8string" type="text" placeholder={question8}></input>
-                <br></br>
-                <input onChange={updateQuestion9} name="question9string" id="question9string" type="text" placeholder={question9}></input>
-                <br></br>
-                <input onChange={updateQuestion10} name="question10string" id="question10string" type="text" placeholder={question10}></input>
-                <br></br>
-                <button>Create new event</button>
+                    {/* Current Questions */}
+                    <label>Current questions in template:</label>
+                    <br></br>
+                    <input onChange={updateQuestion1} name="question1string" id="question1string" type="text" placeholder={question1}></input>
+                    <br></br>
+                    <input onChange={updateQuestion2} name="question2string" id="question2string" type="text" placeholder={question2}></input>
+                    <br></br>
+                    <input onChange={updateQuestion3} name="question3string" id="question3string" type="text" placeholder={question3}></input>
+                    <br></br>
+                    <input onChange={updateQuestion4} name="question4string" id="question4string" type="text" placeholder={question4}></input>
+                    <br></br>
+                    <input onChange={updateQuestion5} name="question5string" id="question5string" type="text" placeholder={question5}></input>
+                    <br></br>
+                    <input onChange={updateQuestion6} name="question6string" id="question6string" type="text" placeholder={question6}></input>
+                    <br></br>
+                    <input onChange={updateQuestion7} name="question7string" id="question7string" type="text" placeholder={question7}></input>
+                    <br></br>
+                    <input onChange={updateQuestion8} name="question8string" id="question8string" type="text" placeholder={question8}></input>
+                    <br></br>
+                    <input onChange={updateQuestion9} name="question9string" id="question9string" type="text" placeholder={question9}></input>
+                    <br></br>
+                    <input onChange={updateQuestion10} name="question10string" id="question10string" type="text" placeholder={question10}></input>
+                    <br></br>
+                    <button>Create new event</button>
+                </fieldset>
             </section>
         </div>
     );

@@ -55,7 +55,7 @@ function Home(){
         <h2>Host access</h2>
         <h3>Access an event as host:</h3>
         <input onChange={updateHostKey} type="text" placeholder="Enter key here" data-testid="HostKeyInput"></input>
-        <button onClick={() => checkValid(hostKey, "host")}>
+        <button onClick={() => checkValid(hostKey, "host")} data-testid="HostLogin">
           {/*valid ? <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link> : <div>Login</div>*/}
           Login
         </button>
@@ -74,7 +74,7 @@ function Home(){
         <input onChange={updateAttKey} type="text" placeholder="Enter key here" data-testid="AttendeeKeyInput"></input>
         <input onChange={updateName} type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
         {/*name not being sent currently*/}
-        <button onClick={() => checkValid(attKey, "att")}>
+        <button onClick={() => checkValid(attKey, "att")} data-testid="AttendeeLogin">
           Login
         </button>
         {!validAtt ? <div>Please try again.</div> : <div></div>}

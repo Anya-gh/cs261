@@ -3,7 +3,7 @@ import "./App.css";
 
 import {Route, Link} from 'react-router-dom';
 
-function Head(props){
+function Head(){
 
     return (
         <div className="Head">
