@@ -1,12 +1,33 @@
-import React, {useState} from "react";
-import {Link} from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import {Link, useHistory} from 'react-router-dom';
 
 import Head from "./Head";
 
 function Home(){
 
   const [attKey, setAttKey] = useState("");
-  const [hostKey, setHostKey] = useState([]);
+  const [hostKey, setHostKey] = useState("");
+  const [validHost, setValidHost] = useState(true);
+  const [validAtt, setValidAtt] = useState(true);
+  const [name, setName] = useState("");
+  const history = useHistory();
+
+  const checkValid = (key, type) => {
+    console.log(key)
+    var initial = key.substring(0, 1);
+    if ((initial == "h") && (type == "host")) {
+      history.push(`/Review/${hostKey}`)
+    }
+    else if ((initial != "h") && (type == "host")) {
+      setValidHost(false);
+    }
+    else if ((initial == "a") && (type == "att") && (name != "")) {
+      history.push(`/Feedback/${attKey}/${name}`)
+    }
+    else if (((initial != "a") || (name == "")) && (type == "att")) {
+      setValidAtt(false);
+    }
+  }
 
   const updateAttKey = e => {
     setAttKey(e.target.value);
@@ -15,6 +36,10 @@ function Home(){
   const updateHostKey = e => {
     setHostKey(e.target.value);
   };
+
+  const updateName = e => {
+    setName(e.target.value);
+  }
 
   return(
     //JSX aka HTML Code
@@ -30,9 +55,11 @@ function Home(){
         <h2>Host access</h2>
         <h3>Access an event as host:</h3>
         <input onChange={updateHostKey} type="text" placeholder="Enter key here" data-testid="HostKeyInput"></input>
-        <button>
-          <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link>
+        <button onClick={() => checkValid(hostKey, "host")}>
+          {/*valid ? <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link> : <div>Login</div>*/}
+          Login
         </button>
+        {!validHost ? <div>Please try again.</div> : <div></div>}
         <h3>OR</h3>
         <button>
             <Link to="/EventCreate">Create new event</Link>
@@ -45,11 +72,12 @@ function Home(){
         <h2>Attendee access</h2>
         <h3>Access an event as attendee:</h3>
         <input onChange={updateAttKey} type="text" placeholder="Enter key here" data-testid="AttendeeKeyInput"></input>
-        <input type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
+        <input onChange={updateName} type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
         {/*name not being sent currently*/}
-        <button>
-          <Link to ={`/Feedback/${attKey}`} data-testid="AttendeeLogin">Login</Link>
+        <button onClick={() => checkValid(attKey, "att")}>
+          Login
         </button>
+        {!validAtt ? <div>Please try again.</div> : <div></div>}
       </div>
     </div>
   );
