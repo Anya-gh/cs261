@@ -1,10 +1,11 @@
 const { PrismaClient } = require('@prisma/client');
-var prisma = require('@prisma/client');
-var express = require('express');
-var router = express.Router();
-var prismadb = new PrismaClient();
+const prisma = require('@prisma/client');
+const express = require('express');
+const router = express.Router();
+const prismadb = new PrismaClient();
+//const Tempbackend = require('../TempBackend.js');
 
-var app = express();
+const app = express();
 app.use(express.json());
 
 //host key check
@@ -26,7 +27,7 @@ router.get('/key/:id', async (req, res) => {
     res.json({exist, keycheck}); //returns eventID and all related objects to front end
 });
 
-//retrieve [event, analysis, array of response] object given an event id
+//retrieve [event, analysis, template, array of response] object given an event id
 router.get('/review/:evID', async (req,res) => {
     const { evID } = req.params;
     const reviewObjs = await prismadb.event.findUnique ({
@@ -36,6 +37,7 @@ router.get('/review/:evID', async (req,res) => {
         select: {
             eventObject: true,
             analysisObject:true,
+            templateObject:true,
             response: {
                 select: {
                     responseObject: true,
@@ -46,6 +48,21 @@ router.get('/review/:evID', async (req,res) => {
     res.json(reviewObjs);
 });
 
+/*
+router.post('/createEvent', async (req,res) => {
+    const {eventName, peopleNum, typeArray, descriptionArray} = req.body;
+    Tempbackend.createNewEvent(eventName, peopleNum, typeArray, descriptionArray);
+    //could add response that returns the added Event or specific objects.
+})
+
+router.post('/createUser', async (req,res) => {
+    const {name, eventID} = req.body;
+    Tempbackend.createNewUser(name,eventID); 
+    //May want to check the Tempbackend.insertUser function as its UserID set to 1
+    //could add a response which Queries for the newly created User or something else
+})
+//Both the above functions don't return anything, may want to ask Joe to change that to return some values.
+*/
 
 /** REDUNDANT host create event 
 // passed information: Title, Host name, event time (start/finish),

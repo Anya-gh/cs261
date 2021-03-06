@@ -59,7 +59,7 @@ async function feedRetrieve (evID) {
 }
 //feedObjs is an object than contains [eventObject, templateObject]
 
-//retrieves [event, analysis, array of response] objects given an event ID
+//retrieves [event, analysis, template, array of response] objects given an event ID
 //meant to be used for the Review page where the aforementioned objects will 
 //be shown to the host
 async function revRetrieve (evID) {
