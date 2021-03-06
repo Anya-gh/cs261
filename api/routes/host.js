@@ -45,21 +45,23 @@ router.get('/review/:evID', async (req,res) => {
     res.json(reviewObjs);
 });
 
-/*
+// the below 2 functions rely on Tempbackend being imported for them to work so set that up first
 router.post('/createEvent', async (req,res) => {
     const {eventName, peopleNum, typeArray, descriptionArray} = req.body;
-    Tempbackend.createNewEvent(eventName, peopleNum, typeArray, descriptionArray);
+    Tempbackend.createNewEvent(eventName, Number(peopleNum), typeArray, descriptionArray);
     //could add response that returns the added Event or specific objects.
+    res.json("success");
 })
 
 router.post('/createUser', async (req,res) => {
     const {name, eventID} = req.body;
-    Tempbackend.createNewUser(name,eventID); 
+    Tempbackend.createNewUser(name,Number(eventID)); 
     //May want to check the Tempbackend.insertUser function as its UserID set to 1
     //could add a response which Queries for the newly created User or something else
+    res.json("success");
 })
 //Both the above functions don't return anything, may want to ask Joe to change that to return some values.
-*/
+
 
 /** REDUNDANT host create event 
 // passed information: Title, Host name, event time (start/finish),

@@ -1,10 +1,11 @@
 const { PrismaClient } = require('@prisma/client');
-var prisma = require('@prisma/client');
-var express = require('express');
-var router = express.Router();
-var prismadb = new PrismaClient();
+const prisma = require('@prisma/client');
+const express = require('express');
+const router = express.Router();
+const prismadb = new PrismaClient();
+//const Tempbackend = require('../TempBackend.js');
 
-var app = express()
+const app = express()
 app.use(express.json())
 
 //---vvv REDUNDANT vvv---
@@ -89,6 +90,7 @@ async function userRetrieve(json, evID) {
 /**uses the above async function to do the same task as the other GET/POST requests in one POST request
 attendee username and attendee key is input to return userObject (create if required), eventObject,
 templateObject and forumObject*/
+//Now relies on Tempbackend to work. ensure that it is all setup before use.
 router.post('/', async(req, res) => {
     const {username, attkey} = req.body;
     //keycheck function
@@ -114,13 +116,7 @@ router.post('/', async(req, res) => {
         //if not exist create user in db
         if (usercheck == null) {
             //create user object function with name
-            const usercreate = await prismadb.user.create({
-                data: {
-                    eventID: keycheck.eventID,
-                    userObject: json, // may need to change this if userObject is designed differently
-                },
-                //maybe include select to get the userobject   
-            });
+            Tempbackend.createNewUser(username,Number(keycheck.eventID));
             usercheck = await userRetrieve(json, keycheck.eventID)
         }
         res.json(usercheck);
@@ -142,5 +138,12 @@ router.get('/feedback/:evID', async(req, res) => {
     })
     res.json(feedQuery);
 });
+//Relies on Tempbackend to work!!!!!!!!
+router.post('/response', async (req,res) => {
+    const {eventID, userID, answerArray} = req.body;
+    Tempbackend.createNewResponse(Number(eventID), Number(userID), answerArray);
+    //may want to retrieve values as well as there is no way of knowing if successful
+    res.json("success");
+})
 
 module.exports = router;
