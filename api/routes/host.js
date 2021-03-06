@@ -27,7 +27,7 @@ router.get('/key/:id', async (req, res) => {
     res.json({exist, keycheck}); //returns eventID and all related objects to front end
 });
 
-//retrieve [event, analysis, template, array of response] object given an event id
+//retrieve [array of response] object given an event id
 router.get('/review/:evID', async (req,res) => {
     const { evID } = req.params;
     const reviewObjs = await prismadb.event.findUnique ({
@@ -35,9 +35,6 @@ router.get('/review/:evID', async (req,res) => {
             eventID: Number(evID),
         },
         select: {
-            eventObject: true,
-            analysisObject:true,
-            templateObject:true,
             response: {
                 select: {
                     responseObject: true,
