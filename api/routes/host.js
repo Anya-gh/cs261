@@ -37,7 +37,6 @@ router.get('/review/:evID', async (req,res) => {
         select: {
             response: {
                 select: {
-                    responseID: true,
                     responseObject: true,
                 },
             },
