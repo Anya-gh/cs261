@@ -22,8 +22,8 @@ function EventCreate() {
     const [startTime, setStartTime] = useState("00:00:00");
     const [endTime, setEndTime] = useState("00:00:00");
     const [eventType, setEventType] = useState(0);
-    const [freqVal, setFreqVal] = useState(0);
-    const [freqScale, setFreqScale] = useState(0);
+    const [freqVal, setFreqVal] = useState("00:00:00");
+    const [people, setPeople] = useState(0);
 
     const updateEventTitle = e => {
         setEventTitle(e.target.value);
@@ -50,14 +50,14 @@ function EventCreate() {
         setFreqVal(e.target.value);
     };
 
-    const updateFreqScale = e => {
-        setFreqScale(e.target.value);
-    };
+    const updatePeople = e => {
+        setPeople(e.target.value);
+    }
 
-    {/* This need to be fixed after the DB code is changed*/}
+    {/* This need to be fixed after the DB code is changed*/ }
     const updateTemplate = e => {
         setTemplate(Apidev.Query("template", id));
-        updateQuestion1(template.questions[0]);
+        updateQuestion1(template.questionArray[0]);
         updateQuestion2(template.questions[1]);
         updateQuestion3(template.questions[2]);
         updateQuestion4(template.questions[3]);
@@ -115,14 +115,28 @@ function EventCreate() {
         setQuestion10(e.target.value);
     };
 
+    const [length, setLength] = useState("00:00:00");
+
+    const updateLength = e => {
+        setLength(endTime - startTime);
+    };
+
+    const createEvent = e => {
+        updateLength();
+        var descriptionArray=new Array(question1,question2,question3,question4,question5,question6,question7,question8,question9,question10);
+        var empty = new Array();
+        /*
+        Apidev.createNewSession(eventTitle, people, freqVal, length, startTime, empty, descriptionArray)
+        */
+    };
 
     return (
         //JSX aka HTML Code
         <div className="EventCreate">
             {/* This is how to comment in JSX*/}
-            <Head/>
+            <Head />
 
-            <h1 style={{ textAlign:"center", width: "100vw"}}>Create event</h1>
+            <h1 style={{ textAlign: "center", width: "100vw" }}>Create event</h1>
             <br></br>
             <section style={{ textAlign: "center", width: "80vw" }}>
                 <fieldset>
@@ -154,13 +168,10 @@ function EventCreate() {
                     </select>
                     <br></br><br></br>
                     <label htmlFor="AnalysisFreq">Choose analysis frequency: </label>
-                    <input onChange={updateFreqVal} name="AnalysisFreqVal" id="AnalysisFreqVal" type="number" size="10"></input>
-                    <select onChange={updateFreqScale} name="AnalysisFreqMagnitude" aria-label="AnalysisFreqMagnitude">
-                        <option value="1">minutes</option>
-                        <option value="2">hours</option>
-                        <option value="3">days</option>
-                        <option value="4">weeks</option>
-                    </select>
+                    <input onChange={updateFreqVal} name="AnalysisFreqVal" id="AnalysisFreqVal" type="time"></input>
+                    <br></br>
+                    <label htmlFor="People">Choose number of people attending: </label>
+                    <input onChange={updatePeople} name="People" id="People" type="number"></input>
                     <br></br><br></br>
                 </fieldset>
             </section>
@@ -206,7 +217,7 @@ function EventCreate() {
                     <br></br>
                     <input onChange={updateQuestion10} name="question10string" id="question10string" type="text" placeholder={question10}></input>
                     <br></br>
-                    <button>Create new event</button>
+                    <button onClick={createEvent}>Create new event</button>
                 </fieldset>
             </section>
         </div>
