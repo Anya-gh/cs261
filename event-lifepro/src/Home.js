@@ -15,16 +15,16 @@ function Home(){
   const checkValid = (key, type) => {
     console.log(key)
     var initial = key.substring(0, 1);
-    if ((initial == "h") && (type == "host")) {
+    if ((initial == 1) && (type == "host")) {
       history.push(`/Review/${hostKey}`)
     }
-    else if ((initial != "h") && (type == "host")) {
+    else if ((initial != 1) && (type == "host")) {
       setValidHost(false);
     }
-    else if ((initial == "a") && (type == "att") && (name != "")) {
+    else if ((initial == 2) && (type == "att") && (name != "")) {
       history.push(`/Feedback/${attKey}/${name}`)
     }
-    else if (((initial != "a") || (name == "")) && (type == "att")) {
+    else if (((initial != 2) || (name == "")) && (type == "att")) {
       setValidAtt(false);
     }
   }
