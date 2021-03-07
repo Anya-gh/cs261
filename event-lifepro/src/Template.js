@@ -12,7 +12,7 @@ class Template {
       this.questionArray.push(new Question(type, description));
     }
     removeQuestion(questionObj){
-      const index = array.indexOf(questionObj);
+      const index = this.questionArray.indexOf(questionObj);
       if (index == -1){
         throw "No questions in array"
       }
@@ -22,7 +22,7 @@ class Template {
 
     }
     editQuestion(questionObj, type, description){
-      const index = array.indexOf(questionObj);
+      const index = this.questionArray.indexOf(questionObj);
       if (index == -1){
         throw "No questions in array"
       }

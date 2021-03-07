@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { userEvent, render } from '@testing-library/react';
 import { BrowserRouter as Router, MemoryRouter, Route, useHistory } from 'react-router-dom';
-import Review from '../../src/Review';
+import Review from '../Review';
 
 describe("<Review />", () => {
   it("renders without crash", () => {

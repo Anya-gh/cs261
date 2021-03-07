@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { userEvent, render } from '@testing-library/react';
 import { BrowserRouter as Router, MemoryRouter, Route, useHistory } from 'react-router-dom';
-import Home from '../../src/Home';
+import Home from '../Home';
 
 describe("<Home />", () => {
   it("renders without crash", () => {

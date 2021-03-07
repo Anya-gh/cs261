@@ -21,31 +21,34 @@ async function keyexists(evID) {
 async function main() {
     //An async function to send queries to the database
     await prisma.event.deleteMany({}); //clears the db to avoid hitting unique constraint errors
-    console.log(5 + 5);
     const event_example = await prisma.event.create ({
         data: {
-            eventID: 1,
+            eventID: 1111,
             eventObject: {
-                name: 'A event',
+                name: 'Event_1',
+                people: 5,
             },
             templateObject: {
-                Question: "How's the event",
+                typeArray: ["open"],
+                descriptionArray: ["How is the event?"],
             },
             forumObject: {
                 Post: "Cannot hear the speaker",
             },
             analysisObject: {
-                Mood: 1,
+                currentInterval: 0,
+                selectedInterval: "<an interval>",
+                length: "<a lenght>",
             },
         },
     })
     console.log(event_example); //outputs what was added to the terminal (It works!)
-    await keyexists(1); //key validation example that checks if key exists in db
+    await keyexists(1111); //key validation example that checks if key exists in db
 
     const key_example = await prisma.key.create ({
         data: {
-            keyID: 1,
-            eventID: 1,
+            keyID: 1111,
+            eventID: 1111,
             keyObject: {
                 name: 'A key object',
             },

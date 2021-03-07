@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import EventCreate from '../../src/EventCreate';
+import EventCreate from '../EventCreate';
 
 describe("<EventCreate />", () => {
     it("renders without crash", () => {
