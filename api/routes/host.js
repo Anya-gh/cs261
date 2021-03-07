@@ -45,6 +45,25 @@ router.get('/review/:evID', async (req,res) => {
     res.json(reviewObjs);
 });
 
+//retrieve [array of user object and userID] given an event id
+router.get('/reviewUser/:evID', async (req,res) => {
+    const { evID } = req.params;
+    const userinfo = await prismadb.event.findUnique ({
+        where: {
+            eventID: Number(evID),
+        },
+        select: {
+            user: {
+                select: {
+                    userID: true,
+                    userObject: true,
+                },
+            },
+        },
+    });
+    res.json(userinfo);
+})
+
 // the below 2 functions rely on Tempbackend being imported for them to work so set that up first
 router.post('/createEvent', async (req,res) => {
     const {eventName, peopleNum, typeArray, descriptionArray} = req.body;
