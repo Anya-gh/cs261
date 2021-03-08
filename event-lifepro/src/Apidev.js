@@ -33,23 +33,13 @@ async function Query (queryObj, id) {
 //retrieves the key value pairs within required Object
 //retrieve values by doing: evObj.key
 
-//retrieves [user, event, template, forum] objects for a user when a name is provided
-//and the attendee key. This also adds the user to the DB if they don't already exist
-//before retrieving the objects.
-//meant to be used when an attendee enters their name and their key.
-async function attAccess (name, attkey) {
-    const url = 'http://localhost:3000/attendee/';
-    let data = {
-        "username": name,
-        "attkey": attkey,
-    }
-    const val = await postTmplt(url, data);
-    return val;
+//meant to be used when an attendee enters their key.
+async function attAccess (attkey) {
+    const eventID = await fetch("http://localhost:3000/attendee/key/" + attkey)
+    .then(response => response.json())
+    .catch(error => console.log(error));
+    return eventID;
 }
-//val is an object that contains [event, userObject] objects. event object contains 
-//[eventObject, templateObject, forumObject] objects from which a key-value pair exist
-//similarly so for userObject. Thus userObject.name will retrieve a string which is the
-//name of the attendee. 
 
 
 //retrieves [event|template] object given an event ID. 
@@ -85,12 +75,16 @@ exports.createNewEvent = createNewEvent;
 exports.createNewUser = createNewUser;
 */
 //also must uncomment some functions that relate to TempBackend in attendee.js and host.js
-//response submission function
+
+//response submission function, also checks/creates for the name of the attendee
 async function resSubmit (eventID, userID, answerArray) {
-    const url = 'http://localhost:3000/attendee/response/';
+    //must add name and anonymous fields, removing userID as no longer required.
+    const url = 'http://localhost:3000/attendee/response';
     let data = {
+        //"name":name,
+        //"anonymous":anonymous
         "eventID":eventID,
-        "userID":userID,
+        "userID":userID, //remove
         "answerArray":answerArray,
     }
     const val = await postTmplt(url, data);
@@ -107,7 +101,7 @@ async function eventCreate (eventName, peopleNum, typeArray, descriptionArray) {
         "descriptionArray":descriptionArray,
     }
     const val = await postTmplt(url, data);
-    return val;
+    return val; //returns success at the end.
 }
 
 //user creating function - primarily for the host.
