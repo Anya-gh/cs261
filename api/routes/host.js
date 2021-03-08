@@ -18,13 +18,13 @@ router.get('/key/:id', async (req, res) => {
             keyID: Number(id),
         },
         select: {
-            event: true,
+            eventID: true,
         },
     })
     if (keycheck != null) {
         exist = true;
     }
-    res.json({exist, keycheck}); //returns eventID and all related objects to front end
+    res.json({exist, keycheck}); //returns eventID and whether the key exists
 });
 
 //retrieve [array of response] object given an event id
