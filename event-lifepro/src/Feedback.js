@@ -37,7 +37,7 @@ function Feedback({match}) {
     }
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form className="Feedback" onSubmit={handleSubmit}>
             {questionAnswers.length > 0 && questionAnswers.map(qA => (
                 console.log(qA),
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswer}/>
