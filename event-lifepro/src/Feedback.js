@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import React from 'react';
 import QuestionAnswer from './QuestionAnswer';
 
@@ -8,10 +9,11 @@ function Feedback({match}) {
     const [questionAnswers, setQuestionAnswers] = useState([]);
     const [testData, setTestData] = useState([])
     const [anonymous, setAnonymous] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
-        /*getEvent();*/
-        updateTestData();
+        getEvent();
+        /*updateTestData();*/
     }, []);
 
     const updateTestData = () => {
@@ -31,18 +33,24 @@ function Feedback({match}) {
     }
 
     const getEvent = async () => {
-        const eventResponse = await fetch(`http://localhost:3000/attendee/feedback/${match.params.id}`);
-        const eventData = await eventResponse.json();
-        /*setEvent(eventData.eventObject);*/
-        console.log(eventData.templateObject.questionArray);
-        var i;
-        setQuestionAnswers((e) => {
-            let newArray = [...e]
-            for (i = 0; i < eventData.templateObject.questionArray.length; i++) {
-                newArray.push([i, eventData.templateObject.questionArray[i].description, ""]);
-            }
-            return newArray
-        })
+        const keyResponse = await fetch(`http://localhost:3000/attendee/key/${match.params.id}`);
+        const keyData = await keyResponse.json();
+        if (!keyData.exist) {
+            history.push({pathname: '/', state: {foundAtt : "false"}})
+        }
+        else {
+            const eventResponse = await fetch(`http://localhost:3000/attendee/feedback/${keyData.keycheck.eventID}`);
+            const eventData = await eventResponse.json();
+            /*setEvent(eventData.eventObject);*/
+            var i;
+            setQuestionAnswers((e) => {
+                let newArray = [...e]
+                for (i = 0; i < eventData.templateObject.questionArray.length; i++) {
+                    newArray.push([i, eventData.templateObject.questionArray[i].description, ""]);
+                }
+                return newArray
+            })
+        }
     };
 
     const toggleAnonymous = e => {
@@ -65,14 +73,14 @@ function Feedback({match}) {
     return(
         <form onSubmit={handleSubmit}>
             <h1>Submitting as : {anonymous ? "Anonymous" : match.params.name}</h1>
-            {/*questionAnswers.length > 0 && questionAnswers.map(qA => (
+            {questionAnswers.length > 0 && questionAnswers.map(qA => (
                 console.log(qA),
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswer}/>
-            ))*/}
-            {testData.map(qA => (
+            ))}
+            {/*testData.map(qA => (
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswerTest}/>
             ))
-            }
+            */}
             <button onClick={toggleAnonymous}>Submit anonymously</button>
             <input type="submit" value="Submit"/>
         </form>

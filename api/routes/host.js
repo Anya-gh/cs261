@@ -41,6 +41,9 @@ router.get('/review/:evID', async (req,res) => {
                     responseObject: true,
                 },
             },
+            eventObject: true,
+            templateObject: true,
+            analysisObject: true
         },
     });
     res.json(reviewObjs);
