@@ -58,13 +58,12 @@ function Review({ match }) {
     */
 
     return(
-        console.log(testData),
         /*<div className="Review">
             {questionResponses.length > 0 && questionResponses.map(qR => (
                 <QuestionResponse key={qR} question={qR[0].description} answers={qR[1]}/>
             ))}
         </div>*/
-        <div className="Review">
+        <div>
             {testData.map(qR => (
                 <QuestionResponse key={qR} question={qR[0]} answers={qR[1]}/>
             ))}
