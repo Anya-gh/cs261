@@ -7,6 +7,7 @@ function Feedback({match}) {
     const [event, setEvent] = useState([]);
     const [questionAnswers, setQuestionAnswers] = useState([]);
     const [testData, setTestData] = useState([])
+    const [anonymous, setAnonymous] = useState(false);
 
     useEffect(() => {
         /*getEvent();*/
@@ -44,8 +45,15 @@ function Feedback({match}) {
         })
     };
 
+    const toggleAnonymous = e => {
+        e.preventDefault();
+        setAnonymous(!anonymous);
+    }
+
     const handleSubmit = async () => {
         /*const responsePost = await post();*/
+        // get time from event as well
+        // dont use time from first call, since time might have changed
     }
 
     /*
@@ -56,6 +64,7 @@ function Feedback({match}) {
 
     return(
         <form onSubmit={handleSubmit}>
+            <h1>Submitting as : {anonymous ? "Anonymous" : match.params.name}</h1>
             {/*questionAnswers.length > 0 && questionAnswers.map(qA => (
                 console.log(qA),
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswer}/>
@@ -64,6 +73,7 @@ function Feedback({match}) {
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswerTest}/>
             ))
             }
+            <button onClick={toggleAnonymous}>Submit anonymously</button>
             <input type="submit" value="Submit"/>
         </form>
         
