@@ -142,6 +142,7 @@ function EventCreate() {
                     <label>Current questions in template:</label>
                     <TemplateForm questions={questions} setQuestions={setQuestions} newQuestion={newQuestion} setNewQuestion={setNewQuestion}/>
                     <TemplateQuestionList questions={questions} setQuestions={setQuestions}/>
+                    <br></br>
                     <button onClick={createEvent}>Create new event</button>
                 </fieldset>
             </section>

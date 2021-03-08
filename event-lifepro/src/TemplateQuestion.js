@@ -8,8 +8,8 @@ const TemplateQuestion = ( {question, questions, setQuestions} ) => {
 
     return (
         <div>
-            <li>{question.description}</li>
-            <button onClick={deleteHandler}>-</button>
+            <li style={{ listStyleType: "" }}>{question.description}
+            <button onClick={deleteHandler}>-</button></li>
         </div>
     );
 };
