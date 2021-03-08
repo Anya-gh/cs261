@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
+import Head from "./Head";
 import React from 'react';
 import QuestionResponse from './QuestionResponse';
 
@@ -21,14 +23,14 @@ function Review({ match }) {
         const keyData = await keyResponse.json();
         console.log(keyData);
         if (!keyData.exist) {
-            history.push({pathname: '/', state: {foundHost : "false"}})
+            history.push({ pathname: '/', state: { foundHost: "false" } })
         }
         else {
             const eventResponse = await fetch(`http://localhost:3000/host/review/${keyData.keycheck.eventID}`);
             const eventData = await eventResponse.json();
             console.log(eventData);
             setEvent((e) => {
-                let newE = {...e}
+                let newE = { ...e }
                 newE = eventData.eventObject
                 return newE
             });
@@ -48,7 +50,7 @@ function Review({ match }) {
                 }
                 for (k = 0; k < feedbackData.response.length; k++) {
                     let currentResponse = feedbackData.response[k].responseObject
-                    let currentUser = userData.user.find( (user) => {
+                    let currentUser = userData.user.find((user) => {
                         return user.userID == feedbackData.response[k].userID;
                     })
                     for (j = 0; j < currentResponse.answers.length; j++) {
@@ -66,17 +68,38 @@ function Review({ match }) {
         Once the work is done I will remove the test data and uncomment the code.
     */
 
-    return(
-        <div>
+    return (
+        <div className="Review" >
+            <Head />
+            <section style={{ textAlign: "center", width: "80vw" }}>
+                <br></br>
+                <label htmlFor="Question instruction"><b>Press on Question to view responses</b></label>
+                <br></br>
+                <br></br>
+                <label htmlFor="Questions"><u>Questions:</u></label>
+                <br></br>
+                <br></br>
             {questionResponses.length > 0 && questionResponses.map(qR => (
                 <QuestionResponse key={qR} question={qR[0].description} answers={qR[1]}/>
             ))}
+            </section>
         </div>
-        /*
-        <div>
-            {testData.map(qR => (
-                <QuestionResponse key={qR} question={qR[0]} answers={qR[1]}/>
-            ))}
+
+        /*<div className="Review" >
+            <Head />
+            <section style={{ textAlign: "center", width: "80vw" }}>
+                <br></br>
+                <label htmlFor="Question instruction"><b>Press on Question to view responses</b></label>
+                <br></br>
+                <br></br>
+                <label htmlFor="Questions"><u>Questions:</u></label>
+                <br></br>
+                <br></br>
+                {testData.map(qR => (               
+                    <QuestionResponse key={qR} question={qR[0]} answers={qR[1]} />
+                    
+                ))}
+            </section>
         </div>*/
     );
 }

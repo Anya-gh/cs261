@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import QuestionAnswer from './QuestionAnswer';
+import Head from "./Head";
 
 function Feedback({match}) {
 
@@ -71,18 +72,22 @@ function Feedback({match}) {
     */
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form className="SubmitResponse" onSubmit={handleSubmit}>
+            <Head />
             <h1>Submitting as : {anonymous ? "Anonymous" : match.params.name}</h1>
             {questionAnswers.length > 0 && questionAnswers.map(qA => (
                 console.log(qA),
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswer}/>
             ))}
+            <br></br>
             {/*testData.map(qA => (
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswerTest}/>
-            ))
-            */}
+            ))*/}
+            <br></br>
             <button onClick={toggleAnonymous}>Submit anonymously</button>
+            <br></br>
             <input type="submit" value="Submit"/>
+            <br></br>
         </form>
         
     );

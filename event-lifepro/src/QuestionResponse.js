@@ -10,11 +10,13 @@ const QuestionResponse = ({question, answers}) => {
     };
 
     return(
-        <div>
+        <div className="questions">
+            <br></br>
             <button onClick={toggleResponses}>{question}</button>
             {toggle && answers.map((answer, index) => (
                 <h2 key={index}>{answer[1]} : {answer[0]}</h2>
             ))}
+            <br></br>
         </div>
     );
 };

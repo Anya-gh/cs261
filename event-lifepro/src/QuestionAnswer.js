@@ -8,9 +8,11 @@ const QuestionAnswers = ({id, question, handler}) => {
     }
 
     return(
-        <div>
+        <div className="questionAnswer">
             <h2 key={id}>{question}</h2>
+            <br></br>
             <input onChange={answerHandler} type="text" placeholder="Enter answer here"></input>
+            <br></br>
         </div>
     );
 };
