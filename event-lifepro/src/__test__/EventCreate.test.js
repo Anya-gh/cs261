@@ -19,7 +19,7 @@ describe("<EventCreate />", () => {
         expect(display.getByLabelText(/to:/).tagName).toBe("INPUT");
         expect(display.getByRole("combobox", {name: "Choose a type of event:"})).not.toBeNull();
         expect(display.getByRole("spinbutton", {id: "Choose analysis frequency:"})).not.toBeNull();
-        expect(display.getByRole("combobox", {name: "AnalysisFreqMagnitude"})).not.toBeNull();
+        expect(display.getByLabelText(/Choose number of people attending:/)).not.toBeNull();
         expect(display.getByRole("combobox", {name: "Import a Template:"})).not.toBeNull();
         expect(display.getByRole("button", {name: "Import Template"})).not.toBeNull();
         expect(display.getByRole("button", {name: "Create new event"})).not.toBeNull();

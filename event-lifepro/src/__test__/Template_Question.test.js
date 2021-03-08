@@ -22,15 +22,15 @@ describe("Template class", () => {
     });
     it("removeQuestion", () => {
         const newTemplate2 = new Template(["open", "open"], ["How is the event?", "Which part was your favourite?"]);
-        newTemplate2.removeQuestion(Q1);
+        newTemplate2.removeQuestion(newTemplate2.questionArray[0]);
         expect(newTemplate2.questionArray).toEqual([Q3]);
-        newTemplate2.removeQuestion(Q3);
+        newTemplate2.removeQuestion(newTemplate2.questionArray[0]);
         expect(newTemplate2.questionArray).toEqual([]);
         //excpect(newTemplate2.removeQuestion(Q2).catch(e => {return e.name})).toEqual("No questions in array");
     });
     it("editQuestion", () => {
         const newTemplate3 = new Template(["open", "select", "open"], ["How is the event?", "Can you hear the speaker?", "Which part was your favourite?"]);
-        newTemplate3.editQuestion(Q1, "select", "Can you see the blackboard?");
+        newTemplate3.editQuestion(newTemplate3.questionArray[0], "select", "Can you see the blackboard?");
         expect(newTemplate3.questionArray).toEqual([new Question("select", "Can you see the blackboard?"), Q2, Q3]);
         const emptyTemplate2 = new Template([], []);
         //excpect(emptyTemplate2.editQuestion(Q2, "select", "Is the speaker too fast?").catch(e => {return e.name})).toEqual("No questions in array");

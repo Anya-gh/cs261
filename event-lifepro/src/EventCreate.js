@@ -169,7 +169,7 @@ function EventCreate() {
                     <br></br><br></br>
                     <label htmlFor="AnalysisFreq">Choose analysis frequency: </label>
                     <input onChange={updateFreqVal} name="AnalysisFreqVal" id="AnalysisFreqVal" type="time"></input>
-                    <br></br>
+                    <br></br><br></br>
                     <label htmlFor="People">Choose number of people attending: </label>
                     <input onChange={updatePeople} name="People" id="People" type="number"></input>
                     <br></br><br></br>

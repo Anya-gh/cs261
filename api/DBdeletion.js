@@ -72,7 +72,7 @@ async function deleteAllEvent() {
     const responsedelete = prisma.response.deleteMany({});
     const keydelete = prisma.key.deleteMany({});
     const userdelete = prisma.key.deleteMany({});
-    const eventdelete = prisma.key.delete({});
+    const eventdelete = prisma.key.deleteMany({});
     const transaction = await prisma.$transaction([responsedelete, keydelete, userdelete, eventdelete]);
 }
 
