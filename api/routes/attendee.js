@@ -105,6 +105,7 @@ async function userRetrieve(json, evID) {
 //GET eventID on checking a key, otherwise returns null
 router.get('/key/:id', async (req, res) => {
     const { id } = req.params;
+    let exist = false;
     const keycheck = await prismadb.key.findUnique({
         where: {
             keyID: Number(id),
@@ -113,7 +114,10 @@ router.get('/key/:id', async (req, res) => {
             eventID: true,
         },
     })
-    res.json(keycheck); //returns eventID to front end
+    if (keycheck != null) {
+        exist = true;
+    }
+    res.json({exist, keycheck}); //returns eventID to front end and whether key exists
 });
 //on front end side, it gets the response that the key code is valid
 //then must execute the check user by passing the attendee name

@@ -35,11 +35,12 @@ async function Query (queryObj, id) {
 
 //meant to be used when an attendee enters their key.
 async function attAccess (attkey) {
-    const eventID = await fetch("http://localhost:3000/attendee/key/" + attkey)
+    const keycheck = await fetch("http://localhost:3000/attendee/key/" + attkey)
     .then(response => response.json())
     .catch(error => console.log(error));
-    return eventID;
+    return keycheck;
 }
+//keycheck is an object that contains exist and eventID.
 
 
 //retrieves [event|template] object given an event ID. 
