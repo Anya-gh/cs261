@@ -46,17 +46,19 @@ async function populate() {
     });
     //create responses
     await prisma.response.create ({
-        data: {responeID: 111111, eventID: 111, userID: 11111, responseObject: {userID: 11111, time: "1210", answers: ["It is good"]}}
+        data: {responseID: 111111, eventID: 111, userID: 11111, responseObject: {userID: 11111, time: "1210", answers: ["It is good"]}}
     });
     await prisma.response.create ({
-        data: {responeID: 111112, eventID: 111, userID: 11112, responseObject: {userID: 11112, time: "1150", answers: ["It is boring"]}}
+        data: {responseID: 111112, eventID: 111, userID: 11112, responseObject: {userID: 11112, time: "1150", answers: ["It is boring"]}}
     });
     await prisma.response.create ({
-        data: {responeID: 111113, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0930", answers: ["I like it so far"]}}
+        data: {responseID: 111113, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0930", answers: ["I like it so far"]}}
     });
     await prisma.response.create ({
-        data: {responeID: 111113, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0945", answers: ["This part is not interesting"]}}
+        data: {responseID: 111114, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0945", answers: ["This part is not interesting"]}}
     });
 }
+
+prisma.$disconnect();
 
 exports.populate = populate;

@@ -71,8 +71,8 @@ async function deleteUser(userID) {
 async function deleteAllEvent() {
     const responsedelete = prisma.response.deleteMany({});
     const keydelete = prisma.key.deleteMany({});
-    const userdelete = prisma.key.deleteMany({});
-    const eventdelete = prisma.key.deleteMany({});
+    const userdelete = prisma.user.deleteMany({});
+    const eventdelete = prisma.event.deleteMany({});
     const transaction = await prisma.$transaction([responsedelete, keydelete, userdelete, eventdelete]);
 }
 
@@ -81,6 +81,8 @@ async function deleteAllUser() {
     const userdelete = prisma.key.deleteMany({});
     const transaction = await prisma.$transaction([responsedelete, userdelete]);
 }
+
+prisma.$disconnect();
 
 exports.deleteEvent = deleteEvent;
 exports.deleteUser = deleteUser;
