@@ -1,7 +1,13 @@
 const { PrismaClient, Prisma } = require('@prisma/client');
 import DBdeletion from './DBdeletion'
 //Imports the PrismaClient constructor for @prismaclient node module
-//Instantiate PrismaClient
+
+/*
+    If it does not work the way you wanted or gives errors:
+        Try importing like "import seed from 'filelocation'"
+        and use seed.populate()
+    Also, you might need to use it in an async function since populate is an async as well (dont know much about this stuff)
+*/
 
 const populate = async () => {
     const prisma = new PrismaClient();
