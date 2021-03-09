@@ -10,6 +10,8 @@ function Feedback({match}) {
     const [questionAnswers, setQuestionAnswers] = useState([]);
     const [testData, setTestData] = useState([])
     const [anonymous, setAnonymous] = useState(false);
+    const [mood, setMood] = useState(null);
+    const [context, setContext] = useState("");
     const history = useHistory();
 
     useEffect(() => {
@@ -55,8 +57,15 @@ function Feedback({match}) {
     };
 
     const toggleAnonymous = e => {
-        e.preventDefault();
         setAnonymous(!anonymous);
+    }
+
+    const updateMood = e => {
+        setMood(e.target.value);
+    }
+
+    const updateContext = e => {
+        setContext(e.target.value);
     }
 
     const handleSubmit = async () => {
@@ -84,7 +93,16 @@ function Feedback({match}) {
                 <QuestionAnswer id={qA[0]} question={qA[1]} handler={updateAnswerTest}/>
             ))*/}
             <br></br>
-            <button onClick={toggleAnonymous}>Submit anonymously</button>
+            <div>
+                Please describe your general mood regarding the event.
+            </div>
+            <div>Mood</div>
+            <input onChange={updateMood} type="range" min="0" max="10"/>
+            <br></br>
+            <input onChange={updateContext} type="text" placeholder="Enter your context"/>
+            <br></br>
+            <input type="checkbox" id="anonymous" onClick={toggleAnonymous}/>
+            <label for="anonymous">Submit anonymously</label>
             <br></br>
             <input type="submit" value="Submit"/>
             <br></br>
