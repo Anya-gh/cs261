@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter as Router, MemoryRouter, Route, useHistory } from 'react-router-dom';
 import App from '../App';
