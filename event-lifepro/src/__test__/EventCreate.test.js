@@ -1,5 +1,6 @@
 import React from "react";
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter as Router } from 'react-router-dom';
 import EventCreate from '../EventCreate';
 
@@ -16,12 +17,29 @@ describe("<EventCreate />", () => {
         expect(display.getByRole("textbox", {name: "Enter title of the event:"})).not.toBeNull();
         expect(display.getByRole("textbox", {name: "Enter name of host:"})).not.toBeNull();
         expect(display.getByLabelText(/From/).tagName).toBe("INPUT");
-        expect(display.getByLabelText(/to:/).tagName).toBe("INPUT");
+        expect(display.getByLabelText(/to/).tagName).toBe("INPUT");
         expect(display.getByRole("combobox", {name: "Choose a type of event:"})).not.toBeNull();
         expect(display.getByRole("spinbutton", {id: "Choose analysis frequency:"})).not.toBeNull();
         expect(display.getByLabelText(/Choose number of people attending:/)).not.toBeNull();
         expect(display.getByRole("combobox", {name: "Import a Template:"})).not.toBeNull();
         expect(display.getByRole("button", {name: "Import Template"})).not.toBeNull();
         expect(display.getByRole("button", {name: "Create new event"})).not.toBeNull();
+    });
+
+    it("loads template and adds/removes questions", () => {
+        render(<Router><EventCreate /></Router>);
+        
+        /*userEvent.selectOptions(screen.getByLabelText("Import a Template:"), "1");
+        userEvent.click(screen.getByText("Import Template"));
+        expect(screen.getByText("How is the event?")).not.toBeNull();*/
+
+        userEvent.type(screen.getByPlaceholderText("Enter your question here"), "My new question?");
+        userEvent.click(screen.getByText("+"));
+        expect(screen.getByText("My new question?")).not.toBeNull();
+
+        const removeButtons = screen.getAllByText("-");
+        userEvent.click(removeButtons[0]);
+        var emptyArray = [];
+        expect(screen.queryAllByText("How is the event?")).toEqual(emptyArray);
     });
 });

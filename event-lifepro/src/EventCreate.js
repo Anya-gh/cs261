@@ -94,7 +94,7 @@ function EventCreate() {
                     <br></br><br></br>
                     <label htmlFor="Start Time">From </label>
                     <input onChange={updatestartTime} name="Start Time" id="Start Time" type="time"></input>
-                    <label htmlFor="End Time"> to: </label>
+                    <label htmlFor="End Time"> to </label>
                     <input onChange={updateEndTime} name="End Time" id="End Time" type="time"></input>
                     <br></br><br></br>
                 </fieldset>

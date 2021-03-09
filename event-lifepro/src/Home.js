@@ -13,7 +13,7 @@ function Home(){
   const history = useHistory();
 
   const checkValid = (key, type) => {
-    console.log(key)
+    //console.log(key)
     var initial = key.substring(0, 1);
     if ((initial == 1) && (type == "host")) {
       history.push(`/Review/${hostKey}`)
@@ -59,7 +59,7 @@ function Home(){
           {/*valid ? <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link> : <div>Login</div>*/}
           Login
         </button>
-        {!validHost ? <div>Please try again.</div> : <div></div>}
+        {!validHost ? <div><p data-testid="HostNotice">Please try again.</p></div> : <div></div>}
         <h3>OR</h3>
         <button>
             <Link to="/EventCreate">Create new event</Link>
@@ -77,7 +77,7 @@ function Home(){
         <button onClick={() => checkValid(attKey, "att")} data-testid="AttendeeLogin">
           Login
         </button>
-        {!validAtt ? <div>Please try again.</div> : <div></div>}
+        {!validAtt ? <div><p data-testid="AttendeeNotice">Please try again.</p></div> : <div></div>}
       </div>
     </div>
   );
