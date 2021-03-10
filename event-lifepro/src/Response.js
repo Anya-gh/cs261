@@ -8,14 +8,18 @@ class Response {
      * @param {Date}        eventStart      Start time of event as a Date
      * @param {integer}     eventInterval   interval in minutes
      * @param {string}      context         response context
+     * @param {string}      name            name to be shown
      */
-    constructor(contentsArray, eventStart, eventInterval, context) {
+    constructor(contentsArray, eventStart, eventInterval, name, context, mood) {
         this.time = Date.now();
         this.interval = Math.floor((this.time - eventStart) / (60000 * eventInterval));
         this.answers = []
-        this.mood = 0;
+        this.mood = mood;
+        this.name = name;
         for (var i =0; i < contentsArray.length; i++){
-            this.addQuestion(contentsArray[i], i);
+            if (contentsArray[i]) {
+                this.addQuestion(contentsArray[i], i);
+            }
         }
         this.context = context;
             //console.log(answerArray[i].content);
@@ -35,19 +39,19 @@ class Response {
      * @param {Response} responseObj Response object
      */
     static async calculateMood(responseObj){
-        var totalMood = 0;
+        var totalMood = ((responseObj.mood - 5) / 5);
         var sentAnalysis;
         for (var i =0; i < responseObj.answers.length; i++){
             sentAnalysis = await Analysis.getSentAnalysis(responseObj.answers[i].content);
             totalMood += sentAnalysis.compound;
-
         }
-        if (responseObj.answers){
-            responseObj.mood =  totalMood / responseObj.answers.length;
+        if (responseObj.answers) {
+            responseObj.mood =  totalMood / (2 * responseObj.answers.length);
             return 
-          }else{
+        }
+        else{
             responseObj.mood = 0;
-          }
+        }
     }
   }
   

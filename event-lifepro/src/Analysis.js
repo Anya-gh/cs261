@@ -20,10 +20,9 @@ class Analysis {
    * @param {string} text text to be analysed
    */
   static async getSentAnalysis(text) {
-    const analysis = await fetch("http://localhost:5000/analysis/" + text)
-      .then(response => response.json())
-      .catch(error => console.log(error));
-    return analysis;
+    const analysisResponse = await fetch("http://localhost:5000/analysis/" + text);
+    const analysisData = await analysisResponse.json();
+    return analysisData;
   }
   /** Iterates through the analysis mostRecentResponse map and totals the mood attribute then computes the average
    * 
@@ -37,7 +36,7 @@ class Analysis {
       totalMood += responseObj.mood;
     }
     var totalResponses = 0;
-    if (responseObj.answers) {
+    if (responseObj && responseObj.answers) {
       totalResponses = analysisObj.mostRecentResponse.size;
       return totalMood / totalResponses;
     } else {

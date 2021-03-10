@@ -5,9 +5,7 @@ class Session extends Event {
       super(eventname, people);
       this.interval = interval;
       this.length = length;
-      this.time = time;      
-      
-
+      this.time = time;
     }
 }
 

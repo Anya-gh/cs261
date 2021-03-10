@@ -3,10 +3,12 @@ const prisma = require('@prisma/client');
 const express = require('express');
 const router = express.Router();
 const prismadb = new PrismaClient();
-//const Tempbackend = require('../TempBackend.js');
+const backend = require('../Backend.js');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.json());
 
 //host key check
 //send all contents in event table
@@ -15,7 +17,7 @@ router.get('/key/:id', async (req, res) => {
     let exist = false;
     const keycheck = await prismadb.key.findUnique({
         where: {
-            keyID: Number(id),
+            hostKey: Number(id),
         },
         select: {
             eventID: true,
@@ -60,7 +62,7 @@ router.get('/reviewUser/:evID', async (req,res) => {
             user: {
                 select: {
                     userID: true,
-                    userObject: true,
+                    name: true,
                 },
             },
         },
@@ -71,14 +73,21 @@ router.get('/reviewUser/:evID', async (req,res) => {
 // the below 2 functions rely on Tempbackend being imported for them to work so set that up first
 router.post('/createEvent', async (req,res) => {
     const {eventName, peopleNum, typeArray, descriptionArray} = req.body;
-    Tempbackend.createNewEvent(eventName, Number(peopleNum), typeArray, descriptionArray);
+    backend.createNewEvent(eventName, Number(peopleNum), typeArray, descriptionArray);
     //could add response that returns the added Event or specific objects.
+    res.json("success");
+})
+
+router.post('/createSession', async (req,res) => {
+    console.log(req.body);
+    const {eventName, people, interval, length, time, typeArray, descriptionArray} = req.body;
+    backend.createNewSession(eventName, people, interval, length, time, typeArray, descriptionArray);
     res.json("success");
 })
 
 router.post('/createUser', async (req,res) => {
     const {name, eventID} = req.body;
-    Tempbackend.createNewUser(name,Number(eventID)); 
+    backend.createNewUser(name,Number(eventID)); 
     //May want to check the Tempbackend.insertUser function as its UserID set to 1
     //could add a response which Queries for the newly created User or something else
     res.json("success");

@@ -3,10 +3,12 @@ const prisma = require('@prisma/client');
 const express = require('express');
 const router = express.Router();
 const prismadb = new PrismaClient();
-//const Tempbackend = require('../TempBackend.js');
+const backend = require('../Backend.js');
+const bodyParser = require('body-parser');
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
+app.use(bodyParser.json());
 
 //---vvv REDUNDANT vvv---
 /**uses the above async function to do the same task as the other GET/POST requests in one POST request
@@ -17,7 +19,6 @@ router.post('/', async(req, res) => {
     const {username, attkey} = req.body;
     //keycheck function
     const intkey = parseInt(attkey);
-    let json = {name: username};
     // ----- IMPORTANT-----
     // may need the change the above var json based on what the userObject contains
     // also the only query possible on json type is equal/not so format must be correct
@@ -34,13 +35,13 @@ router.post('/', async(req, res) => {
         res.json("The key you have entered does not exist");
     }else {
         //usernamecheck
-        var usercheck = await userRetrieve(json, keycheck.eventID);
+        var usercheck = await userRetrieve(username, keycheck.eventID);
         //previously, userRetrieve returned user, event, template, forum objects
         //if not exist create user in db
         if (usercheck == null) {
             //create user object function with name
-            Tempbackend.createNewUser(username,Number(keycheck.eventID));
-            usercheck = await userRetrieve(json, keycheck.eventID)
+            backend.createNewUser(username,Number(keycheck.eventID));
+            usercheck = await userRetrieve(username, keycheck.eventID)
         }
         res.json(usercheck);
     }
@@ -86,13 +87,11 @@ router.post('/create', async(req, res) => {
 
 
 // function that retrieves userID associated to user
-async function userRetrieve(json, evID) {
+async function userRetrieve(name, evID) {
     const reqObject = prismadb.user.findFirst({
         // find unique does not work when dealing with json
         where: {
-            userObject: {
-                equals: json,
-            },
+            name: name,
             eventID: evID,
         },
         select:{
@@ -108,7 +107,7 @@ router.get('/key/:id', async (req, res) => {
     let exist = false;
     const keycheck = await prismadb.key.findUnique({
         where: {
-            keyID: Number(id),
+            attKey: Number(id),
         },
         select: {
             eventID: true,
@@ -140,23 +139,21 @@ router.get('/feedback/:evID', async(req, res) => {
     res.json(feedQuery);
 });
 
-//Relies on Tempbackend to work!!!!!!!!
 router.post('/response', async (req,res) => {
-    const {name, anonymous, eventID, answerArray} = req.body;
-    let json = {name: name};
-    let givenname = name;
+    const {name, anonymous, eventID, answerArray, context, mood} = req.body;
+    let givenName = name;
     //namecheck, returning userID 
-    var usercheck = await userRetrieve(json, Number(eventID));
+    var usercheck = await userRetrieve(name, Number(eventID));
     //if not exist create user in db
     if (usercheck == null) {
         //create user object function with name
-        Tempbackend.createNewUser(name,Number(eventID));
-        usercheck = await userRetrieve(json, Number(eventID));
+        await backend.createNewUser(name,Number(eventID));
+        usercheck = await userRetrieve(name, Number(eventID));
     }
-    if (anonymous = true) {
-        givenname = "Anonymous";
+    if (anonymous === true) {
+        givenName = "Anonymous";
     }
-    Tempbackend.createNewResponse(Number(eventID), Number(usercheck), answerArray); 
+    backend.createNewResponse(Number(eventID), Number(usercheck.userID), answerArray, givenName, context, mood); 
     //add name attribute, where name is set to givenname.
     //may want to retrieve values as well as there is no way of knowing if successful
     res.json("success");

@@ -8,9 +8,8 @@ import QuestionResponse from './QuestionResponse';
 function Review({ match }) {
 
     const [event, setEvent] = useState({});
+    const [mood, setMood] = useState(0);
     const [questionResponses, setQuestionResponses] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [responses, setResponses] = useState([]);
     const history = useHistory();
     const testData = [["Question 1", [["Annie's answer for question 1", "Annie"], ["Bob's answer for question 1", "Bob"]]], ["Question 2", [["Annie's answer for question 2", "Annie"]]]]
 
@@ -26,35 +25,26 @@ function Review({ match }) {
             history.push({ pathname: '/', state: { foundHost: "false" } })
         }
         else {
-            const eventResponse = await fetch(`http://localhost:3000/host/review/${keyData.keycheck.eventID}`);
-            const eventData = await eventResponse.json();
-            console.log(eventData);
-            setEvent((e) => {
-                let newE = { ...e }
-                newE = eventData.eventObject
-                return newE
-            });
-            const userResponse = await fetch(`http://localhost:3000/host/reviewUser/${keyData.keycheck.eventID}`);
-            const userData = await userResponse.json();
-            setUsers(userData.user);
             const feedbackResponse = await fetch(`http://localhost:3000/host/review/${keyData.keycheck.eventID}`);
             const feedbackData = await feedbackResponse.json();
-            setResponses(feedbackData.response);
+            setEvent((e) => {
+                let newE = { ...e }
+                newE = feedbackData.eventObject
+                return newE
+            });
+            setMood(feedbackData.analysisObject.currentMood);
             setQuestionResponses((e) => {
                 var i;
                 var j;
                 var k;
                 let newArray = [...e]
-                for (i = 0; i < eventData.templateObject.questionArray.length; i++) {
-                    newArray.push([eventData.templateObject.questionArray[i], []]);
+                for (i = 0; i < feedbackData.templateObject.questionArray.length; i++) {
+                    newArray.push([feedbackData.templateObject.questionArray[i], []]);
                 }
                 for (k = 0; k < feedbackData.response.length; k++) {
                     let currentResponse = feedbackData.response[k].responseObject
-                    let currentUser = userData.user.find((user) => {
-                        return user.userID == feedbackData.response[k].userID;
-                    })
                     for (j = 0; j < currentResponse.answers.length; j++) {
-                        newArray[currentResponse.answers[j].questionID - 1][1].push([currentResponse.answers[j].content, currentUser.userObject.name]);
+                        newArray[currentResponse.answers[j].questionID][1].push([currentResponse.answers[j].content, currentResponse.name, currentResponse.time]);
                     }
                 }
                 console.log(newArray);
@@ -72,6 +62,8 @@ function Review({ match }) {
         <div className="Review" >
             <Head />
             <section style={{ textAlign: "center", width: "80vw" }}>
+                <br></br>
+                <label htmlFor="Average mood"><b>Average mood: {mood}</b></label>
                 <br></br>
                 <label htmlFor="Question instruction"><b>Press on Question to view responses</b></label>
                 <br></br>

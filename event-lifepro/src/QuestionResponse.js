@@ -9,12 +9,15 @@ const QuestionResponse = ({question, answers}) => {
         setToggle(!toggle);
     };
 
+    let date;
+
     return(
         <div className="questions">
             <br></br>
             <button onClick={toggleResponses}>{question}</button>
             {toggle && answers.map((answer, index) => (
-                <h2 key={index}>{answer[1]} : {answer[0]}</h2>
+                date = new Date(answer[2]),
+                <h2 key={index}>{answer[1]} : {answer[0]} : {date.getHours()}:{date.getMinutes()}</h2>
             ))}
             <br></br>
         </div>

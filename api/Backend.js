@@ -10,7 +10,6 @@ const Response = require('../event-lifepro/src/Response.js');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
 //createNewSession("event name", 1000, 10, 60, Date.now(), ["type1", "type2"], ["description1", "description2"]);
 //createNewUser("Joe", 35);
 //createNewUser("John", 35);
@@ -76,20 +75,18 @@ async function insertEvent(event, template, forum, analysis) {
  * @param {integer} eventID     eventID 
  */
 async function createNewUser(name, eventID) {
-    var newUser = new User(name);
-    await insertUser(newUser, eventID);
-
+    await insertUser(name, eventID);
 }
 /** Inserts a user object into database
  * 
  * @param {User}    userObj         userObj to be stored
  * @param {integer} eventIDparam    associated eventID    
  */
-async function insertUser(userObj, eventIDparam) {
+async function insertUser(userName, eventIDparam) {
     const createEvent = await prisma.user.create({
         data: {
             eventID: eventIDparam,
-            userObject: userObj
+            name: userName
         },
     })
 }
@@ -102,7 +99,7 @@ async function insertUser(userObj, eventIDparam) {
  * @param {string[]}    answerArray     users answers to questions
  * @param {string}      context         context to answers
  */
-async function createNewResponse(eventID, userID, answerArray, context) {
+async function createNewResponse(eventID, userID, answerArray, name, context, mood) {
 
     var eventObj = await getEventObject(eventID);
     var analysisObj = await getAnalysisObject(eventID);
@@ -110,7 +107,7 @@ async function createNewResponse(eventID, userID, answerArray, context) {
     //console.log("CNR MMR START")
     //console.log(analysisObj.mostRecentResponse.entries());
 
-    var newResponseObj = new Response(answerArray, eventObj.time, eventObj.interval, context);
+    var newResponseObj = new Response(answerArray, eventObj.time, eventObj.interval, name, context, mood);
     await Response.calculateMood(newResponseObj);
     userEventResponses = await findUserEventResponses(eventID, userID);
     newResponseID = -1;
@@ -224,7 +221,6 @@ async function getAnalysisObject(eventIDparam) {
         }
     })
     analysisObj = eventObj.analysisObject;
-    console.log(JSON.stringify(analysisObj));
 
     await Analysis.convertObjectToMap(analysisObj);
 
@@ -232,3 +228,6 @@ async function getAnalysisObject(eventIDparam) {
     return analysisObj;
 }
 
+exports.createNewSession = createNewSession;
+exports.createNewResponse = createNewResponse;
+exports.createNewUser = createNewUser;

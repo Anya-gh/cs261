@@ -6,11 +6,11 @@ import Head from "./Head";
 
 function Feedback({match}) {
 
-    const [event, setEvent] = useState([]);
+    const [event, setEvent] = useState("");
     const [questionAnswers, setQuestionAnswers] = useState([]);
     const [testData, setTestData] = useState([])
     const [anonymous, setAnonymous] = useState(false);
-    const [mood, setMood] = useState(null);
+    const [mood, setMood] = useState(5);
     const [context, setContext] = useState("");
     const history = useHistory();
 
@@ -42,6 +42,7 @@ function Feedback({match}) {
             history.push({pathname: '/', state: {foundAtt : "false"}})
         }
         else {
+            setEvent(keyData.keycheck.eventID);
             const eventResponse = await fetch(`http://localhost:3000/attendee/feedback/${keyData.keycheck.eventID}`);
             const eventData = await eventResponse.json();
             /*setEvent(eventData.eventObject);*/
@@ -55,6 +56,35 @@ function Feedback({match}) {
             })
         }
     };
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        const url = "http://localhost:3000/attendee/response";
+        let answerArray = [];
+        var i;
+        for (i = 0; i < questionAnswers.length; i++) {
+            answerArray[i] = questionAnswers[i][2];
+        }
+        const data = {
+            name: match.params.name,
+            anonymous: anonymous,
+            eventID: event,
+            answerArray: answerArray,
+            context: context,
+            mood: mood
+        }
+        await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .catch((error) => {
+            console.log("Error: ", error);
+        });
+    }
 
     const toggleAnonymous = e => {
         setAnonymous(!anonymous);
@@ -81,7 +111,7 @@ function Feedback({match}) {
     */
 
     return(
-        <form className="SubmitResponse" onSubmit={handleSubmit}>
+        <form className="SubmitResponse" onSubmit={submitHandler}>
             <Head />
             <h1>Submitting as : {anonymous ? "Anonymous" : match.params.name}</h1>
             {questionAnswers.length > 0 && questionAnswers.map(qA => (
