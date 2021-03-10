@@ -8,7 +8,7 @@ const QuestionAnswers = ({id, question, handler}) => {
     }
 
     return(
-        <div className="questionAnswer">
+        <div className="questionAnswer" style={{ textAlign: "center", width: "80vw" }}>
             <h2 key={id}>{question}</h2>
             <br></br>
             <input onChange={answerHandler} type="text" placeholder="Enter answer here"></input>
