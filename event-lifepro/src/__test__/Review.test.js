@@ -5,7 +5,7 @@ import Review from '../Review';
 
 describe("<Review />", () => {
   it("renders without crash", () => {
-    //render(<Router><Review /></Router>);
+    render(<Router><Review /></Router>);
   });
   /*it("renders Review page content", () => {
     const display = render(<Router><Review /></Router>);

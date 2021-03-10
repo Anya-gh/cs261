@@ -13,7 +13,7 @@ class Analysis {
     this.selectedInterval = selectedInterval;
     this.length = length
     this.mostRecentResponse = new Map()
-    this.mostRecentResponse.set(1, "test")
+    //this.mostRecentResponse.set(1, "test")
   }
   /** API call to retrieve sentiment analysis
    * 

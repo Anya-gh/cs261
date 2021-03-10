@@ -30,36 +30,36 @@ const populate = async () => {
         });
         //create keys
         const k1 = prisma.key.create ({
-            data: {keyID: 1111, eventID: 111, keyObject: {attendeeKey: "attK 1", hostKey: "hK 1"}}
+            data: {keyID: 1111, eventID: 111, attKey: 21111, hostKey: 11111}
         });
         const k2 = prisma.key.create ({
-            data: {keyID: 1112, eventID: 112, keyObject: {attendeeKey: "attK 2", hostKey: "hK 2"}}
+            data: {keyID: 1112, eventID: 112, attKey: 21112, hostKey: 11112}
         });
         const k3 = prisma.key.create ({
-            data: {keyID: 1113, eventID: 113, keyObject: {attendeeKey: "attK 3", hostKey: "hK 3"}}
+            data: {keyID: 1113, eventID: 113, attKey: 21113, hostKey: 11113}
         });
         //create users
         const u1 = prisma.user.create ({
-            data: {userID: 11111, eventID: 111, userObject: {name: "User 1"}}
+            data: {userID: 11111, eventID: 111, name: "User 1"}
         });
         const u2 = prisma.user.create ({
-            data: {userID: 11112, eventID: 111, userObject: {name: "User 2"}}
+            data: {userID: 11112, eventID: 111, name: "User 2"}
         });
         const u3 = prisma.user.create ({
-            data: {userID: 11113, eventID: 112, userObject: {name: "User 3"}}
+            data: {userID: 11113, eventID: 112, name: "User 3"}
         });
         //create responses
         const r0 = prisma.response.create ({
-            data: {responseID: 111111, eventID: 111, userID: 11111, responseObject: {userID: 11111, time: "1210", answers: ["It is good"]}}
+            data: {responseID: 111111, eventID: 111, userID: 11111, responseObject: {userID: 11111, time: "1210", answers: ["It is good"], mood: 5}}
         });
         const r1 = prisma.response.create ({
-            data: {responseID: 111112, eventID: 111, userID: 11112, responseObject: {userID: 11112, time: "1150", answers: ["It is boring"]}}
+            data: {responseID: 111112, eventID: 111, userID: 11112, responseObject: {userID: 11112, time: "1150", answers: ["It is boring"], mood: 1}}
         });
         const r2 = prisma.response.create ({
-            data: {responseID: 111113, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0930", answers: ["I like it so far"]}}
+            data: {responseID: 111113, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0930", answers: ["I like it so far"], mood: 4}}
         });
         const r3 = prisma.response.create ({
-            data: {responseID: 111114, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0948", answers: ["This part is not interesting"]}}
+            data: {responseID: 111114, eventID: 112, userID: 11113, responseObject: {userID: 11113, time: "0948", answers: ["This part is not interesting"], mood: 3}}
         });
         const transaction = await prisma.$transaction([e1,e2,e3,k1,k2,k3,u1,u2,u3,r0,r1,r2,r3]);
     } catch(e) {
