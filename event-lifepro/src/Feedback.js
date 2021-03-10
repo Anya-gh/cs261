@@ -132,7 +132,7 @@ function Feedback({match}) {
             <input onChange={updateContext} type="text" placeholder="Enter your context"/>
             <br></br>
             <input type="checkbox" id="anonymous" onClick={toggleAnonymous}/>
-            <label for="anonymous">Toggle anonymity</label>
+            <label htmlFor="anonymous">Toggle anonymity</label>
             <br></br>
             <input type="submit" value="Submit"/>
             <br></br>

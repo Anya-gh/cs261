@@ -11,7 +11,7 @@ Each of the functions then would be
 DBdeletion.function;
 Also please notify if you want the functions to return what they are doing
 */
-
+/*
 //deletes a specific event
 async function deleteEvent(evID) {
     const prisma = new PrismaClient()
@@ -80,23 +80,22 @@ async function deleteUser(userID) {
         prisma.$disconnect();
     }
 }
-
+*/
 //since everything in DB relates to the Event. Delete all event deletes all in all tables
 async function deleteAllEvent() {
     const prisma = new PrismaClient()
     try {
         const responsedelete = prisma.response.deleteMany({});
-        const keydelete = prisma.key.deleteMany({});
         const userdelete = prisma.user.deleteMany({});
         const eventdelete = prisma.event.deleteMany({});
-        const transaction = await prisma.$transaction([responsedelete, keydelete, userdelete, eventdelete]);
+        const transaction = await prisma.$transaction([responsedelete, userdelete, eventdelete]);
     } catch(e) {
         throw e;
     } finally {
         prisma.$disconnect();
     }
 }
-
+/*
 async function deleteAllUser() {
     const prisma = new PrismaClient()
     try {
@@ -108,9 +107,9 @@ async function deleteAllUser() {
     } finally {
         prisma.$disconnect();
     }
-}
-
+}*/
+/*
 exports.deleteEvent = deleteEvent;
 exports.deleteUser = deleteUser;
-exports.deleteAllUser = deleteAllUser;
+exports.deleteAllUser = deleteAllUser;*/
 exports.deleteAllEvent = deleteAllEvent;

@@ -1,7 +1,7 @@
-import Analysis, { calculateMood } from '../Analysis.js';
-const fetch = require('../../../api/node_modules/cross-fetch');
+import Analysis from '../Analysis.js';
 import Response from '../Response.js'
 import Answer from '../Answer.js'
+
 
 describe("Response class", () => {
     it("constructor and mood calculation", async () => {
