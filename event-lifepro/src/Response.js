@@ -2,13 +2,16 @@ const Answer = require('./Answer.js');
 const Analysis = require('./Analysis.js');
 
 class Response {
-    /** Creates a response object. Takes event time information to calculate which interval response was made in
+    
+    
+     /** Creates a response object. Takes event time information to calculate which interval response was made in
      *      
      * @param {string[]}    contentsArray   array of question answers
      * @param {Date}        eventStart      Start time of event as a Date
      * @param {integer}     eventInterval   interval in minutes
      * @param {string}      context         response context
      * @param {string}      name            name to be shown
+     * @param {integer}     mood            selected mood from user between 0-10 
      */
     constructor(contentsArray, eventStart, eventInterval, name, context, mood) {
         this.time = Date.now();

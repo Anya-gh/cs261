@@ -19,10 +19,11 @@ model Event {
   templateObject  Json
   forumObject     Json
   analysisObject  Json
+  attKey          Int @unique
+  hostKey         Int @unique
 
   //one to many relation of eventID in Event with User, Key, Response
   user            User[]
-  key             Key[]
   response        Response[]
 }
 
@@ -34,16 +35,6 @@ model User {
   //relates eventID to eventID in Event model (many to 1 as single eventID will be connected to many User)
   event       Event @relation(fields: [eventID], references: [eventID])
   response    Response[]
-}
-
-model Key {
-  keyID       Int @id 
-  eventID     Int 
-  attKey      Int @unique
-  hostKey     Int @unique
-
-  // many to one relation w/ Event through eventID as host and attendee have separate key
-  event       Event @relation(fields: [eventID], references: [eventID])
 }
 
 model Response {

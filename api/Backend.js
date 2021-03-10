@@ -45,12 +45,12 @@ async function createDefaultTemplates(typeArray, descriptionArray) {
  */
 async function createNewSession(eventname, people, interval, length, time, typeArray, descriptionArray) {
     var newEvent = new Session(eventname, people, interval, length, time);
-    var newTemplate = new Template(typeArray, descriptionArray)
-    var newForum = new Forum()
-    var newAnalysis = new Analysis(people, length, interval)
-
-
-    await insertEvent(newEvent, newTemplate, newForum, newAnalysis)
+    var newTemplate = new Template(typeArray, descriptionArray);
+    var newForum = new Forum();
+    var newAnalysis = new Analysis(people, length, interval);
+    var attKey = await generateKey("attendee");
+    var hostKey = await generateKey("host");
+    await insertEvent(newEvent, newTemplate, newForum, newAnalysis, attKey, hostKey)
 }
 /** Inserts event details into database
  * 
@@ -59,13 +59,15 @@ async function createNewSession(eventname, people, interval, length, time, typeA
  * @param {Forum}       forum       forumObj to be stored
  * @param {Analysis}    analysis    analysisObj to be stored
  */
-async function insertEvent(event, template, forum, analysis) {
+async function insertEvent(event, template, forum, analysis, attKeyparam, hostKeyparam) {
     const createEvent = await prisma.event.create({
         data: {
             eventObject: event,
             templateObject: template,
             forumObject: forum,
-            analysisObject: analysis
+            analysisObject: analysis,
+            attKey: attKeyparam,
+            hostKey: hostKeyparam
         },
     })
 }
@@ -226,6 +228,62 @@ async function getAnalysisObject(eventIDparam) {
 
 
     return analysisObj;
+}
+async function generateKey(keyType) {
+    let keyLength = 6;
+    let keyStr = '';
+    let keyInt
+    let keyIdentifier = keyType.charCodeAt(0);
+    let keyValid = false;
+    let randnum = 0;
+    let randnumStr = '';
+    let multiple = Math.pow(10, keyLength);
+    let keyExists = false;
+    while (!keyValid) {
+        randnum = Math.floor((Math.random() * multiple) + 1);
+        randnumStr = randnum.toString();
+        while (randnumStr.length < keyLength) randnumStr = "0" + randnumStr; //pads zeros if neccessary
+        keyStr = keyIdentifier + randnumStr;
+        keyInt = parseInt(keyStr);
+        keyExists = await doesKeyExist(keyInt);
+        if (!keyExists) {
+            keyValid = true;
+        }
+
+    }
+    return keyInt;
+}
+async function validateKey(keyType, key) {
+    let keyIdentifier = keyType.charCodeAt(0)
+    if (keyIdentifier !== key.charCodeAt(0)) {
+        throw 'Key is the wrong type';
+    }
+
+    if (isNaN(key.substring(1))) {
+        throw 'Key is not in correct format. Key should be a number';
+    }
+    let keyExists = await doesKeyExist(key);
+    if (!keyExists) {
+        throw 'Key does not exist';
+    }
+    return true;
+}
+async function doesKeyExist(key) {
+    const eventObj1 = await prisma.event.findUnique({
+        where: {
+            attKey: key
+        },
+    });
+    const eventObj2 = await prisma.event.findUnique({
+        where: {
+            hostKey: key
+        },
+    });
+    if (eventObj1 || eventObj2) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 exports.createNewSession = createNewSession;
