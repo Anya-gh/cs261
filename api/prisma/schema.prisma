@@ -28,8 +28,8 @@ model Event {
 
 model User {
   userID      Int @default(autoincrement()) @unique //one to many relation with Response
-  eventID     Int 
-  userObject  Json
+  eventID     Int
+  name        String
 
   //relates eventID to eventID in Event model (many to 1 as single eventID will be connected to many User)
   event       Event @relation(fields: [eventID], references: [eventID])
@@ -39,7 +39,8 @@ model User {
 model Key {
   keyID       Int @id 
   eventID     Int 
-  keyObject   Json
+  attKey      Int @unique
+  hostKey     Int @unique
 
   // many to one relation w/ Event through eventID as host and attendee have separate key
   event       Event @relation(fields: [eventID], references: [eventID])
