@@ -80,7 +80,7 @@ function Home(){
         <button onClick={() => checkValid(attKey, "attendee")} data-testid="AttendeeLogin">
           Login
         </button>
-        {validAtt}
+        <p>{validAtt}</p>
       </div>
     </div>
   );
