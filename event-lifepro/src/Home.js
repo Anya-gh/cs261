@@ -7,25 +7,28 @@ function Home(){
 
   const [attKey, setAttKey] = useState("");
   const [hostKey, setHostKey] = useState("");
-  const [validHost, setValidHost] = useState(true);
-  const [validAtt, setValidAtt] = useState(true);
+  const [validHost, setValidHost] = useState("");
+  const [validAtt, setValidAtt] = useState("");
   const [name, setName] = useState("");
   const history = useHistory();
 
-  const checkValid = (key, type) => {
-    //console.log(key)
-    var initial = key.substring(0, 1);
-    if ((initial == 1) && (type == "host")) {
-      history.push(`/Review/${hostKey}`)
+  const checkValid = async (key, type) => {
+    console.log(`http://localhost:3000/${type}/key/${key}`);
+    const keyResponse = await fetch(`http://localhost:3000/${type}/key/${key}`);
+    const keyData = await keyResponse.json();
+    if (type === "host") {
+      setValidHost(keyData);
     }
-    else if ((initial != 1) && (type == "host")) {
-      setValidHost(false);
+    else {
+      setValidAtt(keyData);
     }
-    else if ((initial == 2) && (type == "att") && (name != "")) {
-      history.push(`/Feedback/${attKey}/${name}`)
-    }
-    else if (((initial != 2) || (name == "")) && (type == "att")) {
-      setValidAtt(false);
+    if (keyData === "") {
+      if (type === "host") {
+        history.push({pathname: `/review/${key}`});
+      }
+      else {
+        history.push({pathname: `/feedback/${key}/${name}`});
+      }
     }
   }
 
@@ -59,7 +62,7 @@ function Home(){
           {/*valid ? <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link> : <div>Login</div>*/}
           Login
         </button>
-        {!validHost ? <div><p data-testid="HostNotice">Please try again.</p></div> : <div></div>}
+        {validHost}
         <h3>OR</h3>
         <button>
             <Link to="/EventCreate">Create new event</Link>
@@ -74,10 +77,10 @@ function Home(){
         <input onChange={updateAttKey} type="text" placeholder="Enter key here" data-testid="AttendeeKeyInput"></input>
         <input onChange={updateName} type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
         {/*name not being sent currently*/}
-        <button onClick={() => checkValid(attKey, "att")} data-testid="AttendeeLogin">
+        <button onClick={() => checkValid(attKey, "attendee")} data-testid="AttendeeLogin">
           Login
         </button>
-        {!validAtt ? <div><p data-testid="AttendeeNotice">Please try again.</p></div> : <div></div>}
+        {validAtt}
       </div>
     </div>
   );

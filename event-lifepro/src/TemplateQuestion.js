@@ -8,7 +8,7 @@ const TemplateQuestion = ( {question, questions, setQuestions} ) => {
 
     return (
         <div>
-            <li style={{ listStyleType: "" }}>{question.description}
+            <li key={question.id} style={{ listStyleType: "" }}>{question.description}
             <button onClick={deleteHandler}>-</button></li>
         </div>
     );

@@ -101,42 +101,29 @@ async function userRetrieve(name, evID) {
     return reqObject;
 }
 
-//GET eventID on checking a key, otherwise returns null
+//attendee key check
 router.get('/key/:id', async (req, res) => {
     const { id } = req.params;
-    let exist = false;
-    const keycheck = await prismadb.key.findUnique({
-        where: {
-            attKey: Number(id),
-        },
-        select: {
-            eventID: true,
-        },
-    })
-    if (keycheck != null) {
-        exist = true;
-    }
-    res.json({exist, keycheck}); //returns eventID to front end and whether key exists
+    await backend.validateKey("attendee", id)
+    .then((value) => res.json(value))  //whether the key exists
 });
 //on front end side, it gets the response that the key code is valid
 //then must execute the check user by passing the attendee name
 
-
-
-
 //retrieves [event, template] objects given an event id
-router.get('/feedback/:evID', async(req, res) => {
-    const { evID } = req.params;
-    const feedQuery = await prismadb.event.findUnique({
+router.get('/feedback/:key', async(req, res) => {
+    const { key } = req.params;
+    const eventObject = await prismadb.event.findUnique({
         where: {
-            eventID: Number(evID),
+            attKey: Number(key),
         },
         select: {
             eventObject: true,
             templateObject: true,
+            eventID: true,
         },
     })
-    res.json(feedQuery);
+    res.json(eventObject);
 });
 
 router.post('/response', async (req,res) => {

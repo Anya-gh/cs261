@@ -11,45 +11,33 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 //host key check
-//send all contents in event table
 router.get('/key/:id', async (req, res) => {
     const { id } = req.params;
-    let exist = false;
-    const keycheck = await prismadb.key.findUnique({
-        where: {
-            hostKey: Number(id),
-        },
-        select: {
-            eventID: true,
-        },
-    })
-    if (keycheck != null) {
-        exist = true;
-    }
-    res.json({exist, keycheck}); //returns eventID and whether the key exists
+    await backend.validateKey("host", id)
+    .then((value) => res.json(value))  //whether the key exists
 });
 
-//retrieve [array of response] object given an event id
-router.get('/review/:evID', async (req,res) => {
-    const { evID } = req.params;
-    const reviewObjs = await prismadb.event.findUnique ({
+router.get('/review/:key', async (req, res) => {
+    const {key} = req.params;
+    const eventObject = await prismadb.event.findUnique ({
         where: {
-            eventID: Number(evID),
+            hostKey: Number(key)
         },
         select: {
             response: {
                 select: {
                     userID: true,
-                    responseObject: true,
+                    responseObject: true
                 },
             },
+            attKey: true,
             eventObject: true,
             templateObject: true,
-            analysisObject: true
-        },
-    });
-    res.json(reviewObjs);
-});
+            analysisObject: true,
+        }
+    })
+    res.json(eventObject)
+})
 
 //retrieve [array of user object and userID] given an event id
 router.get('/reviewUser/:evID', async (req,res) => {
@@ -81,8 +69,8 @@ router.post('/createEvent', async (req,res) => {
 router.post('/createSession', async (req,res) => {
     console.log(req.body);
     const {eventName, people, interval, length, time, typeArray, descriptionArray} = req.body;
-    backend.createNewSession(eventName, people, interval, length, time, typeArray, descriptionArray);
-    res.json("success");
+    const keys = await backend.createNewSession(eventName, people, interval, length, time, typeArray, descriptionArray);
+    res.json(keys);
 })
 
 router.post('/createUser', async (req,res) => {

@@ -256,18 +256,18 @@ async function generateKey(keyType) {
 async function validateKey(keyType, key) {
     let keyIdentifier = keyType.charCodeAt(0);
     let keyStr = key.toString();
-    if (!keyStr.startsWith(keyIdentifier.toString()) {
-        throw 'Key is the wrong type';
+    if (!keyStr.startsWith(keyIdentifier.toString())) {
+        return 'Key is the wrong type';
     }
 
     if (isNaN(key.substring(1))) {
-        throw 'Key is not in correct format. Key should be a number';
+        return 'Key is not in correct format. Key should be a number';
     }
-    let keyExists = await doesKeyExist(key);
+    let keyExists = await doesKeyExist(Number(key));
     if (!keyExists) {
-        throw 'Key does not exist';
+        return 'Key does not exist';
     }
-    return true;
+    return "";
 }
 async function doesKeyExist(key) {
     const eventObj1 = await prisma.event.findUnique({

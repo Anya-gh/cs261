@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Head from "./Head";
 import TemplateForm from "./TemplateForm";
 import TemplateQuestionList from "./TemplateQuestionList";
 import Apidev from "./Apidev";
 
-import { Route, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 function EventCreate() {
@@ -17,7 +17,8 @@ function EventCreate() {
     const [people, setPeople] = useState(0);
     const [length, setLength] = useState(0);
     const [questions, setQuestions] = useState([]);
-    const [newQuestion, setNewQuestion] = useState("");
+    const [valid, setValid] = useState(true);
+    const history = useHistory();
 
     const updateEventTitle = e => {
         setEventTitle(e.target.value);
@@ -46,36 +47,47 @@ function EventCreate() {
     const updateTemplate = e => {
 
     };
-    
-    const createEvent = async () => {
-        var i;
-        const typeArray = [];
-        const descriptionArray = [];
-        for (i = 0; i < questions.length; i++) {
-            descriptionArray.push(questions[i].description);
-            typeArray.push("");
+
+    useEffect(() => {
+        if (questions.length == 0 || interval == 0 || length == 0 || eventTitle == "" || people == 0) {
+            setValid(false);
         }
-        const url = "http://localhost:3000/host/createSession";
-        const data = {
-            eventName: eventTitle,
-            people: people,
-            interval: interval,
-            length: length,
-            time: Date.now(),
-            typeArray: typeArray,
-            descriptionArray: descriptionArray
-        };
-        await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .catch((error) => {
-            console.log("Error: ", error);
-        });
+        else {
+            setValid(true);
+        }
+    }, [questions, interval, length, eventTitle, people])
+    
+    const createEvent = async (e) => {
+        console.log(valid);
+        if (valid) {
+            var i;
+            const typeArray = [];
+            const descriptionArray = [];
+            for (i = 0; i < questions.length; i++) {
+                descriptionArray.push([questions[i].description, questions[i].options]);
+                typeArray.push(questions[i].type);
+            }
+            const url = "http://localhost:3000/host/createSession";
+            const data = {
+                eventName: eventTitle,
+                people: people,
+                interval: interval,
+                length: length,
+                time: Date.now(),
+                typeArray: typeArray,
+                descriptionArray: descriptionArray
+            };
+            const eventResponse = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            const eventData = await eventResponse.json();
+            console.log(eventData);
+            history.push({pathname: `/review/${eventData.hostKey}`})
+        }
     };
 
     return (
@@ -139,12 +151,13 @@ function EventCreate() {
 
                     {/* Current Questions */}
                     <label>Current questions in template:</label>
-                    <TemplateForm questions={questions} setQuestions={setQuestions} newQuestion={newQuestion} setNewQuestion={setNewQuestion}/>
+                    <TemplateForm questions={questions} setQuestions={setQuestions}/>
                     <TemplateQuestionList questions={questions} setQuestions={setQuestions}/>
                     <br></br>
                     <button onClick={createEvent}>Create new event</button>
                 </fieldset>
             </section>
+            <p>{!valid ? "All fields are required." : ""}</p>
         </div>
     );
 }
