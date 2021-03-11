@@ -50,7 +50,8 @@ async function createNewSession(eventname, people, interval, length, time, typeA
     var newAnalysis = new Analysis(people, length, interval);
     var attKey = await generateKey("attendee");
     var hostKey = await generateKey("host");
-    await insertEvent(newEvent, newTemplate, newForum, newAnalysis, attKey, hostKey)
+    await insertEvent(newEvent, newTemplate, newForum, newAnalysis, attKey, hostKey);
+    return {hostKey: hostKey, attKey: attKey};
 }
 /** Inserts event details into database
  * 
@@ -249,7 +250,6 @@ async function generateKey(keyType) {
         if (!keyExists) {
             keyValid = true;
         }
-
     }
     return keyInt;
 }
@@ -289,3 +289,4 @@ async function doesKeyExist(key) {
 exports.createNewSession = createNewSession;
 exports.createNewResponse = createNewResponse;
 exports.createNewUser = createNewUser;
+exports.validateKey = validateKey;
