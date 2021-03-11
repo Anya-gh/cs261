@@ -22,11 +22,11 @@ function Review({ match }) {
         getEvent();
     }, []);
 
-    const updatePastMoods = (pastMoods) => {
+    const updatePastMoods = (pastMoods, interval) => {
         var i;
         var intervals = [];
         for (i = 0; i < pastMoods.length; i++) {
-            var element = "Interval " + i;
+            var element = (i * interval) + " minutes";
             intervals.push(element);
         }
         setIntervals(intervals);
@@ -42,7 +42,7 @@ function Review({ match }) {
             setAttKey(feedbackData.attKey);
             return newE;
         });
-        updatePastMoods(feedbackData.analysisObject.moodArray);
+        updatePastMoods(feedbackData.analysisObject.moodArray, feedbackData.eventObject.interval);
         setMood(feedbackData.analysisObject.currentMood);
         setQuestionResponses((e) => {
             var i;
