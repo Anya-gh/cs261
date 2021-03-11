@@ -256,7 +256,7 @@ async function generateKey(keyType) {
 async function validateKey(keyType, key) {
     let keyIdentifier = keyType.charCodeAt(0);
     let keyStr = key.toString();
-    if (!keyStr.startsWith(keyIdentifier.toString()) {
+    if (!keyStr.startsWith(keyIdentifier.toString())) {
         throw 'Key is the wrong type';
     }
 
