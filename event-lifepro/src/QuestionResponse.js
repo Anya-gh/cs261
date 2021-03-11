@@ -11,8 +11,6 @@ const QuestionResponse = ({question, answers, type}) => {
 
     useEffect(() => {
         updateChoices();
-        console.log(question);
-        console.log(answers[0]);
     }, [question, answers])
 
     const updateChoices = () => {
@@ -29,10 +27,6 @@ const QuestionResponse = ({question, answers, type}) => {
                 newSelectionsArray[answers[j][0]] += 1;
             }
         }
-        /*for (i = 0; i < answers.length; i++) {
-            console.log(answers[i][0]);
-            //newArray[answers[i][0]] += 1;
-        }*/
         setSelections(newSelectionsArray);
         setChoices(newChoicesArray);
     }

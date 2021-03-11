@@ -25,7 +25,7 @@ const QuestionAnswers = ({id, question, handler}) => {
                 {question.description[1].map((option, index) => (
                     <label>
                         {option}
-                        <input type="radio" onChange={answerHandler} id={index} name="option" value={index}/>
+                        <input type="radio" onChange={answerHandler} id={index} name={"option" + id} value={index}/>
                         <br></br>
                     </label>
                 ))}
