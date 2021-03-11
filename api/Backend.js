@@ -256,16 +256,12 @@ async function generateKey(keyType) {
 async function validateKey(keyType, key) {
     let keyIdentifier = keyType.charCodeAt(0);
     let keyStr = key.toString();
-    if (!keyStr.startsWith(keyIdentifier.toString())) {
-        return 'Key is the wrong type';
-    }
-
-    if (isNaN(key.substring(1))) {
-        return 'Key is not in correct format. Key should be a number';
+    if (!keyStr.startsWith(keyIdentifier.toString()) || isNaN(key.substring(1))) {
+        return 'Key is invalid. Please try again.';
     }
     let keyExists = await doesKeyExist(Number(key));
     if (!keyExists) {
-        return 'Key does not exist';
+        return 'Key does not exist. Please try again';
     }
     return "";
 }
