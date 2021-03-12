@@ -1,6 +1,6 @@
-import Analysis from '../Analysis.js';
-import Response from '../Response.js'
-import Answer from '../Answer.js'
+const Analysis = require('../Analysis.js');
+const Response = require('../Response.js');
+const Answer = require('../Answer.js')
 
 
 describe("Response class", () => {

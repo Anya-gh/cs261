@@ -9,13 +9,13 @@ test("Database", async () => {
     const newMap = {};
     const e1 = await prisma.event.findUnique({where: {eventID: 1}});
     expect(e1).toEqual({eventID: 1, eventObject: {eventname: 'Event 1', people: 2, interval: 2, length: 20, time: 0}, templateObject: {questionArray: [{type: "open", description: "How is the event?"}]},
-                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 941, hostKey: 1041});
+                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 971, hostKey: 1041});
     const e2 = await prisma.event.findUnique({where: {eventID: 2}});
     expect(e2).toEqual({eventID: 2, eventObject: {eventname: 'Event 2', people: 1, interval: 12, length: 120, time: 0}, templateObject: {questionArray: [{type: "open", description: "How is the event?"}]},
-                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 942, hostKey: 1042});
+                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 972, hostKey: 1042});
     const e3 = await prisma.event.findUnique({where: {eventID: 3}});
     expect(e3).toEqual({eventID: 3, eventObject: {eventname: 'Event 3', people: 100, interval: 30, length: 600, time: 0}, templateObject: {questionArray: [{type: "open", description: "How is the event?"}]},
-                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 943, hostKey: 1043});
+                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 973, hostKey: 1043});
     const u1 = await prisma.user.findUnique({where: {userID: 1}});
     expect(u1).toEqual({userID: 1, eventID: 1, name: "User 1"});
     const u2 = await prisma.user.findUnique({where: {userID: 2}});

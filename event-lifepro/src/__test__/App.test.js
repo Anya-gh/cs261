@@ -5,8 +5,6 @@ import { BrowserRouter as Router, MemoryRouter, Route } from 'react-router-dom';
 const { PrismaClient } = require('../../../api/node_modules/@prisma/client');
 import App from '../App';
 
-//beforeAll(() => jest.spyOn(global, 'fetch'))
-
 describe("<App />", () => {
 
     it("renders without crash", () => {
@@ -30,30 +28,34 @@ describe("<App />", () => {
           </MemoryRouter>
         );
 
-        act(() => { userEvent.click(screen.getByText("Create new event")); });
+        fireEvent.click(screen.getByText("Create new event"));
         expect(location.pathname).toEqual("/EventCreate");
 
-        const mockSuccessResponse = {/* stuff returned by the api about the created event */};
-        const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
-        const mockFetchPromise = Promise.resolve({ // 3
+        /*const emptyArray = [];
+        const newMap = new Map();
+        const mockSuccessResponse = {eventID: 1, eventObject: {eventname: 'Event 1', people: 2, interval: 2, length: 20, time: Date.now()}, templateObject: {questionArray: [{type: "text", description: "How is the event?", options: emptyArray, id: 1}]},
+                                    forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 971, hostKey: 1041};
+        const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+        const mockFetchPromise = Promise.resolve({ 
           json: () => mockJsonPromise,
         });
-        jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise); // 4
+        jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);*/
+        new XMLHttpRequest()
 
         //act(() => {
         fireEvent.change(screen.getByLabelText("Enter title of the event:"), { target: { value: 'Test Title' } })
         //userEvent.type(screen.getByLabelText("Enter title of the event:"), "Test Title");
-        fireEvent.change(screen.getByLabelText("Enter the length of the event:"), { target: { value: '120' } })
+        fireEvent.change(screen.getByLabelText("Enter the length of the event:"), { target: { value: '60' } })
         //userEvent.type(screen.getByLabelText("Enter the length of the event:"), "120");
         fireEvent.change(screen.getByLabelText("Choose a type of event:"), { target: { value: '1' } })
         //userEvent.selectOptions(screen.getByLabelText("Choose a type of event:"), "1");
-        fireEvent.change(screen.getByLabelText("Choose analysis frequency:"), { target: { value: '8' } })
+        fireEvent.change(screen.getByLabelText("Choose analysis frequency:"), { target: { value: '5' } })
         //userEvent.type(screen.getByLabelText("Choose analysis frequency:"), "8");
         fireEvent.change(screen.getByLabelText("Choose number of people attending:"), { target: { value: '30' } })
         //userEvent.type(screen.getByLabelText("Choose number of people attending:"), "30");
         fireEvent.change(screen.getByLabelText("Import a Template:"), { target: { value: '1' } })
         //userEvent.selectOptions(screen.getByLabelText("Import a Template:"), "1");
-        fireEvent.click(screen.getByText("Import Template"))
+        //fireEvent.click(screen.getByText("Import Template"))
         //userEvent.click(screen.getByText("Import Template"));
         fireEvent.change(screen.getByPlaceholderText("Enter your question here"), { target: { value: 'Test question?' } })
         //userEvent.type(screen.getByPlaceholderText("Enter your question here"), "Test question?");
@@ -66,7 +68,7 @@ describe("<App />", () => {
         /*act(() => {*/ fireEvent.click(screen.getByText("Create new event"))
           //userEvent.click(screen.getByText("Create new event"));*/ });
         //await expect(location.pathname).resolves.toMatch(new RegExp("^/Review/104?"));
-        await waitFor(() => expect(location.pathname).toMatch(new RegExp("^/Review/104?")));
+        await waitFor(() => expect(location.pathname).toMatch(new RegExp("^/Review/104")));
       });
 /*
       it("redirects to Review/HostKey page for valid HostKey", () => {

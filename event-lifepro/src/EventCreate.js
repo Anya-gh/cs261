@@ -67,7 +67,7 @@ function EventCreate() {
                 descriptionArray.push([questions[i].description, questions[i].options]);
                 typeArray.push(questions[i].type);
             }
-            const url = "http://localhost:3001/host/createSession";
+            const url = "http://localhost:3000/host/createSession";
             const data = {
                 eventName: eventTitle,
                 people: people,
@@ -77,6 +77,7 @@ function EventCreate() {
                 typeArray: typeArray,
                 descriptionArray: descriptionArray
             };
+            console.log(data)
             const eventResponse = await fetch(url, {
                 method: "POST",
                 headers: {

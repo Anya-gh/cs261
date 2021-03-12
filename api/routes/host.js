@@ -70,7 +70,7 @@ router.post('/createSession', async (req,res) => {
     console.log(req.body);
     const {eventName, people, interval, length, time, typeArray, descriptionArray} = req.body;
     const keys = await backend.createNewSession(eventName, people, interval, length, time, typeArray, descriptionArray);
-    res.json(keys);
+    res.json("success");
 })
 
 router.post('/createUser', async (req,res) => {
