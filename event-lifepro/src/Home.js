@@ -54,30 +54,28 @@ function Home(){
       
       {/*Host access section*/}
 
-      <div className="Hostacc">
-        <h2>Host access</h2>
+      <div className="homeAccess">
+        <h2 className="accessTitle">Host access</h2>
         <h3>Access an event as host:</h3>
-        <input onChange={updateHostKey} type="text" placeholder="Enter key here" data-testid="HostKeyInput"></input>
-        <button onClick={() => checkValid(hostKey, "host")} data-testid="HostLogin">
+        <input className="inputField" onChange={updateHostKey} type="text" placeholder="Enter key here" data-testid="HostKeyInput"></input>
+        <button className="homeButton" onClick={() => checkValid(hostKey, "host")} data-testid="HostLogin">
           {/*valid ? <Link to ={`/Review/${hostKey}`} data-testid="HostLogin">Login</Link> : <div>Login</div>*/}
           Login
         </button>
         {validHost}
         <h3>OR</h3>
-        <button>
-            <Link to="/EventCreate">Create new event</Link>
-        </button>
+            <Link className="homeLink" to="/EventCreate"><button className="homeButton">Create new event</button></Link>
       </div>
 
       {/*Attendee access section*/}
 
-      <div className="Attendacc">
-        <h2>Attendee access</h2>
+      <div className="homeAccess">
+        <h2 className="accessTitle">Attendee access</h2>
         <h3>Access an event as attendee:</h3>
-        <input onChange={updateAttKey} type="text" placeholder="Enter key here" data-testid="AttendeeKeyInput"></input>
-        <input onChange={updateName} type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
+        <input className="inputField"onChange={updateAttKey} type="text" placeholder="Enter key here" data-testid="AttendeeKeyInput"></input>
+        <input className="inputField" onChange={updateName} type="text" placeholder="Enter your name here" data-testid="AttendeeNameInput"></input>
         {/*name not being sent currently*/}
-        <button onClick={() => checkValid(attKey, "attendee")} data-testid="AttendeeLogin">
+        <button className="homeButton" onClick={() => checkValid(attKey, "attendee")} data-testid="AttendeeLogin">
           Login
         </button>
         <p>{validAtt}</p>

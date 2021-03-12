@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import React from 'react';
 import QuestionAnswer from './QuestionAnswer';
 import Head from "./Head";
+import uuid from 'react-uuid';
 
 function Feedback({match}) {
 
@@ -95,8 +96,8 @@ function Feedback({match}) {
     return(
         <form className="SubmitResponse" onSubmit={submitHandler}>
             <Head />
-            <h1>{event.eventname}</h1>
-            <h2 key="name">Submitting as : {anonymous ? "Anonymous" : match.params.name}</h2>
+            <h1 style={{margin: "30px"}}>{event.eventname}</h1>
+            <h2 style={{margin: "10px", fontStyle:"italic", color:"grey"}} key="name">Submitting as : {anonymous ? "Anonymous" : match.params.name}</h2>
             {questionAnswers.length > 0 && questionAnswers.map((qA, index) => (
                 <QuestionAnswer key={index} id={qA[0]} question={qA[1]} handler={updateAnswer}/>
             ))}
@@ -104,22 +105,24 @@ function Feedback({match}) {
             <div>
                 Please describe your general mood regarding the event.
             </div>
-            <div>Mood</div>
-            <input onChange={updateMood} type="range" min="0" max="10"/>
             <br></br>
-            <input onChange={updateContext} type="text" placeholder="Enter your context"/>
+            <h3 style={{margin: "5px"}}>Mood</h3>
+            <input style={{margin: "10px"}} onChange={updateMood} type="range" min="0" max="10"/>
+            <br></br>
+            <h3 style={{margin: "5px"}}>Context</h3>
+            <input className="inputField" onChange={updateContext} type="text" placeholder="Enter your context"/>
             <br></br>
             <label>
                 Toggle anonymity
-                <input type="checkbox" id="anonymous" onClick={toggleAnonymous}/>
+                <input style={{margin: "5px"}} type="checkbox" id="anonymous" onClick={toggleAnonymous}/>
             </label>
             <br></br>
-            <input type="submit" value="Submit"/>
+            <input className="formButton" type="submit" value="Submit"/>
             <br></br>
             {submit ?
-            <div>
-            <p>Thank you for your submission!</p> <br></br>
-            <p>You may submit again to update your feedback.</p>
+            <div style={{display: "flex", flexDirection:"column", justifyContent:"center"}}>
+            <p style={{margin:"10px", textAlign:"center"}}>Thank you for your submission!</p>
+            <p style={{margin:"10px", textAlign:"center"}}>You may submit again to update your feedback.</p>
             </div> 
             : answerError ?
             <p>You must submit at least one answer. Please try again.</p>

@@ -52,28 +52,39 @@ function Review({ match }) {
             for (i = 0; i < feedbackData.templateObject.questionArray.length; i++) {
                 newArray.push([feedbackData.templateObject.questionArray[i], []]);
             }
+            let contextArray = [];
             for (k = 0; k < feedbackData.response.length; k++) {
                 let currentResponse = feedbackData.response[k].responseObject
-                setContexts([...contexts, [currentResponse.context, currentResponse.name, currentResponse.time]]);
+                contextArray.push([currentResponse.context, currentResponse.name, currentResponse.time]);
                 for (j = 0; j < currentResponse.answers.length; j++) {
                     newArray[currentResponse.answers[j].questionID][1].push([currentResponse.answers[j].content, currentResponse.name, currentResponse.time]);
                 }
             }
+            setContexts(contextArray);
             return newArray;
         });
     };
 
     return (
+        console.log(contexts),
         <div className="Review" >
             <Head />
-            <h3>Host key: {match.params.id}</h3>
-            <br></br>
-            <h3>Attendee key: {attKey}</h3>
+            <div style={{alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "flex-start"}}>
+                <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
+                    <h3 style={{textAlign: "center", margin: "20px"}}>Host key</h3>
+                    <p style={{textAlign: "center", color: "grey"}}>{match.params.id}</p>
+                </div>
+                <br></br>
+                <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
+                    <h3 style={{textAlign: "center", margin: "20px"}}>Attendee key</h3>
+                    <p style={{textAlign: "center", color: "grey"}}>{attKey}</p>
+                </div>
+            </div>
             <section style={{ textAlign: "center", width: "80vw" }}>
                 <br></br>
-                <label htmlFor="Average mood"><b>Average mood: {mood}</b></label>
+                <h3 style={{margin: "20px"}} htmlFor="Average mood">Average mood: {mood.toFixed(3)}</h3>
                 <br></br>
-                <label htmlFor="Questions"><u>Questions:</u></label>
+                <h2 htmlFor="Questions"><u>Questions:</u></h2>
                 <br></br>
                 <br></br>
             {questionResponses.length > 0 && questionResponses.map((qR, index) => (

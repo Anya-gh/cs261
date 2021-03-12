@@ -10,16 +10,18 @@ const OptionsForm = ( {options, setOptions} ) => {
 
     const submitOptionHandler = e => {
         e.preventDefault();
-        setOptions([
-            ...options, {description: newOption, id: uuid()}
-        ])
-        setNewOption("");
+        if (newOption !== "") {
+            setOptions([
+                ...options, {description: newOption, id: uuid()}
+            ])
+            setNewOption("");
+        }
     }
 
     return (
         <div>
-            <input value={newOption || ""} onChange={newOptionHandler} type="text" placeholder="Enter your option here"/>
-            <button onClick={submitOptionHandler} type="submit">+</button>
+            <input style={{marginTop: "20px", padding: "5px"}} value={newOption || ""} onChange={newOptionHandler} type="text" placeholder="Enter your option here"/>
+            <button style={{padding: "5px"}} onClick={submitOptionHandler} type="submit">+</button>
         </div>
     )
 }

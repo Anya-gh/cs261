@@ -46,20 +46,28 @@ const QuestionResponse = ({question, answers, type}) => {
             <br></br>
             <h2>{question[0]}</h2>
             <br></br>
-            <button onClick={toggleResponses}>View responses</button>
+            <button className="formButton" onClick={toggleResponses}>View responses</button>
             { 
             type === "text" ?
             toggle && answers.map((answer, index) => (
                 date = new Date(answer[2]),
-                <h3 key={index}>{answer[1]} : {answer[0]} : {date.getHours()}:{date.getMinutes()}</h3>
+                <div key={index} style={{margin: "10px"}}>
+                    <h3 style={{margin: "10px"}}>{answer[1]}, {date.getHours()}:{date.getMinutes()}</h3>
+                    <p>{answer[0]}</p>
+                </div>
             ))
             : type === "choice" ?
             <div>
-                <button  onClick={toggleChart}>View graph</button>
-                {toggle && answers.map((answer, index) => (
+                <button className="formButton" onClick={toggleChart}>View graph</button>
+                {toggle && (answers.length > 0 ? answers.map((answer, index) => (
                     date = new Date(answer[2]),
-                    <h3 key={index}>{answer[1]} : {question[1][answer[0]]} : {date.getHours()}:{date.getMinutes()}</h3>
-                ))}
+                    <div key={index}>
+                        <h3 style={{margin: "10px"}}>{answer[1]}, {date.getHours()}:{date.getMinutes()}</h3>
+                        <p>({Number(answer[0]) + 1}) {question[1][answer[0]]}</p>
+                    </div>
+                )) : "No responses recieved yet.")}
+                {console.log("choices", choices)}
+                {console.log("selections", selections)}
                 {chartToggle && <BarChart labels={choices} label="Selections" data={selections}/>}
             </div>
             : ""}
