@@ -12,24 +12,20 @@ const QuestionAnswers = ({id, question, handler}) => {
         <div style={{ textAlign: "center", width: "80vw" }}>
             {question.type === "text" ?
             <>
-            <h2>{question.description}</h2>
-            <br></br>
-            <input onChange={answerHandler} type="text" placeholder="Enter answer here"></input>
+            <h2 style={{margin: "10px"}}>{question.description}</h2>
+            <input className="inputField" onChange={answerHandler} type="text" placeholder="Enter answer here"></input>
             <br></br>
             </>
             :
             <>
-            <h2>{question.description[0]}</h2>
-            <br></br>
-            <React.Fragment>
+            <h2 style={{margin: "10px"}}>{question.description[0]}</h2>
                 {question.description[1].map((option, index) => (
-                    <label>
+                    <div key={index}>
                         {option}
-                        <input type="radio" onChange={answerHandler} id={index} name={"option" + id} value={index}/>
+                        <input style={{margin: "5px"}} type="radio" onChange={answerHandler} id={index} name={"option" + id} value={index}/>
                         <br></br>
-                    </label>
+                    </div>
                 ))}
-            </React.Fragment>
             </>
             }
         </div>

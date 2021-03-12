@@ -99,35 +99,35 @@ function EventCreate() {
 
             <h1 style={{ textAlign: "center", width: "100vw" }}>Create event</h1>
             <br></br>
-            <section style={{ textAlign: "center", width: "80vw" }}>
+            <div style={{ textAlign: "center", width: "80vw" }}>
                 <fieldset>
                     <legend>Event information</legend>
                     <br></br>
                     <label htmlFor="Event Title">Enter title of the event: </label>
-                    <input onChange={updateEventTitle} name="Event Title" id="Event Title" type="text" placeholder="Event Title"></input>
+                    <input className="inputField" onChange={updateEventTitle} name="Event Title" id="Event Title" type="text" placeholder="Event Title"></input>
                     <br></br><br></br>
                     <label htmlFor="Length">Enter the length of the event: </label>
-                    <input onChange={updateLength} name="Length" id="Length" type="number" placeholder="Length"></input>
+                    <input className="inputField" onChange={updateLength} name="Length" id="Length" type="number" placeholder="Length"></input>
                     <br></br><br></br>
                 </fieldset>
-            </section>
+            </div>
             <br></br>
             <section style={{ textAlign: "center", width: "80vw" }}>
                 <fieldset>
                     <legend>Event settings</legend>
                     <br></br>
                     <label htmlFor="Event Type">Choose a type of event: </label>
-                    <select onChange={updateEventType} name="Event Type" id="Event Type">
+                    <select className="inputField" onChange={updateEventType} name="Event Type" id="Event Type">
                         <option value="1">Session</option>
                         <option value="2">Series of sessions</option>
                         <option value="3">Project</option>
                     </select>
                     <br></br><br></br>
                     <label htmlFor="AnalysisFreqVal">Choose analysis frequency: </label>
-                    <input onChange={updateInterval} name="AnalysisFreqVal" id="AnalysisFreqVal" type="number"></input>
+                    <input className="inputField" onChange={updateInterval} placeholder="Frequency" name="AnalysisFreqVal" id="AnalysisFreqVal" type="number"></input>
                     <br></br><br></br>
                     <label htmlFor="People">Choose number of people attending: </label>
-                    <input onChange={updatePeople} name="People" id="People" type="number"></input>
+                    <input className="inputField" onChange={updatePeople} placeholder="People" name="People" id="People" type="number"></input>
                     <br></br><br></br>
                 </fieldset>
             </section>
@@ -145,7 +145,7 @@ function EventCreate() {
                         <option value="5">5</option>
                     </select>
                     <br></br>
-                    <button onClick={updateTemplate}>Import Template</button>
+                    <button className="formButton" onClick={updateTemplate}>Import Template</button>
                     <br></br><br></br>
 
                     {/*Question section*/}
@@ -155,9 +155,10 @@ function EventCreate() {
                     <TemplateForm questions={questions} setQuestions={setQuestions}/>
                     <TemplateQuestionList questions={questions} setQuestions={setQuestions}/>
                     <br></br>
-                    <button onClick={createEvent}>Create new event</button>
+                    <button className="formButton" onClick={createEvent}>Create new event</button>
                 </fieldset>
             </section>
+            <br></br>
             <p>{!valid ? "All fields are required." : ""}</p>
         </div>
     );

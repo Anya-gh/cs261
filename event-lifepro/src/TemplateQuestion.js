@@ -7,9 +7,9 @@ const TemplateQuestion = ( {question, questions, setQuestions} ) => {
     }
 
     return (
-        <div>
-            <li key={question.id} style={{ listStyleType: "" }}>{question.description}
-            <button onClick={deleteHandler}>-</button></li>
+        <div style={{margin: "10px"}}>
+            <li key={question.id} style={{listStyleType: "", display:"flex", flexDirection:"row", justifyContent:"center"}}><p style={{marginRight:"5px"}}>{question.description}</p>
+            <button style={{paddingLeft:"5px", paddingRight:"5px", paddingTop:"0px", paddingBottom:"0px", height: "20px", textAlign: "center"}} onClick={deleteHandler}>-</button></li>
         </div>
     );
 };

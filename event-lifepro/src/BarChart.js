@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Chart from "chart.js";
 
-const LineChart = ( {labels, label, data, options} ) => {
+const LineChart = ( {labels, label, data} ) => {
     const chartRef = React.createRef();
     useEffect(() => {
         console.log(labels);
@@ -17,7 +17,16 @@ const LineChart = ( {labels, label, data, options} ) => {
                     data: data,
                 }
             ]},
-            options: options
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 5
+                        }
+                    }]
+                }
+            }
         });
     }, [labels, data])
 

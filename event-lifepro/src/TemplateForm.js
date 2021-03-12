@@ -31,31 +31,33 @@ const TemplateForm = ( {questions, setQuestions} ) => {
             ]);
         }
         else {
-            let optionsArray = [];
-            options.map(option => (
-                optionsArray.push(option.description)
-            ))
-            setQuestions([
-                ...questions, {description: newQuestion, type: "choice", options: optionsArray, id: uuid()}
-            ])
+            if (newQuestion !== "") {
+                let optionsArray = [];
+                options.map(option => (
+                    optionsArray.push(option.description)
+                ))
+                setQuestions([
+                    ...questions, {description: newQuestion, type: "choice", options: optionsArray, id: uuid()}
+                ])
+            }
         }
         setNewQuestion("");
         setOptions([]);
     }
     return (
         <div>  
-            <input value={newQuestion || ""} onChange={newQuestionHandler} type="text" placeholder="Enter your question here"/>
-            <select onChange={questionTypeHandler} name="questionType" id = "questionType" data-testid = "Qtype">
+            <input style={{marginTop: "20px", padding: "5px"}} value={newQuestion || ""} onChange={newQuestionHandler} type="text" placeholder="Enter your question here"/>
+            <select style={{padding: "5px"}} onChange={questionTypeHandler} name="questionType" id = "questionType" data-testid = "Qtype">
                 <option value="text">Text</option>  
                 <option value="choice">Choice</option>
             </select>
+            <button style={{padding: "5px"}} onClick={submitQuestionHandler} type="submit">+</button>
             {choice
             ?
             <>
             <OptionsForm options={options} setOptions={setOptions}/> <OptionsList options={options} setOptions={setOptions}/>
             </>
             : ""}
-            <button onClick={submitQuestionHandler} type="submit">+</button>
         </div>
     )
 };
