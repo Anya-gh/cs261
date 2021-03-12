@@ -9,7 +9,7 @@ test("Database", async () => {
     const newMap = {};
     const e1 = await prisma.event.findUnique({where: {eventID: 1}});
     expect(e1).toEqual({eventID: 1, eventObject: {eventname: 'Event 1', people: 2, interval: 2, length: 20, time: 0}, templateObject: {questionArray: [{type: "open", description: "How is the event?"}]},
-                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 94, hostKey: 1041});
+                         forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 941, hostKey: 1041});
     const e2 = await prisma.event.findUnique({where: {eventID: 2}});
     expect(e2).toEqual({eventID: 2, eventObject: {eventname: 'Event 2', people: 1, interval: 12, length: 120, time: 0}, templateObject: {questionArray: [{type: "open", description: "How is the event?"}]},
                          forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}, attKey: 942, hostKey: 1042});
@@ -29,7 +29,7 @@ test("Database", async () => {
     const r3 = await prisma.response.findUnique({where: {responseID: 3}});
     expect(r3).toEqual({responseID: 3, eventID: 2, userID: 3, responseObject: {time: 1615388569598, interval: 1, answers: ["It is fine so far."], mood: 4, name: "User 3", context: "no ctx"}});
     const r4 = await prisma.response.findUnique({where: {responseID: 4}});
-    expect(r4).toEqual({responseID: 4, eventID: 2, userID: 3, responseObject: {time: 1615388569598, interval: 1, answers: ["This part is boring."], mood: 3, name: "User 4", context: "no ctx"}});
+    expect(r4).toEqual({responseID: 4, eventID: 2, userID: 3, responseObject: {time: 1615388569598, interval: 1, answers: ["This part is boring."], mood: 3, name: "User 3", context: "no ctx"}});
     } catch(e) {
         throw e;
     } finally {

@@ -7,7 +7,7 @@ import Feedback from '../Feedback';
 describe("<Feedback />", () => {
     it("renders without crash", () => {
         render(<Router><Route path="/Feedback/21111/name"><Feedback /></Route></Router>);
-    });
+    });/*
     it("submits", async () => {
         const display = render(<Router><Route path="/Feedback/21111/name"><Feedback /></Route></Router>);
         const answerBoxes = await display.findByRole("header", {hidden: true});
@@ -19,9 +19,9 @@ describe("<Feedback />", () => {
           }
         }
         userEvent.click(screen.getByText("Submit"));
-        /*const prisma = new PrismaClient();
+        const prisma = new PrismaClient();
         const r4 = prisma.response.findUnique({where: {responseID: 1}});
         expect(r4).resolves.toEqual({responseID: 1, eventID: 111, userID: 1, responseObject: {time: 1615388569598, interval: 1, answers: ["answer1"], mood: 0, name: "Test Name", context: "answer2"}});
-        prisma.$disconnect();*/
-    });
+        prisma.$disconnect();
+    });*/
 });

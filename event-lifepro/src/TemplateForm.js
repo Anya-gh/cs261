@@ -45,7 +45,7 @@ const TemplateForm = ( {questions, setQuestions} ) => {
     return (
         <div>  
             <input value={newQuestion || ""} onChange={newQuestionHandler} type="text" placeholder="Enter your question here"/>
-            <select onChange={questionTypeHandler} name="questionType" id = "questionType">
+            <select onChange={questionTypeHandler} name="questionType" id = "questionType" data-testid = "Qtype">
                 <option value="text">Text</option>  
                 <option value="choice">Choice</option>
             </select>

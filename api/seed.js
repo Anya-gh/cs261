@@ -17,17 +17,17 @@ const populate = async () => {
         const newMap = new Map();
         const e1 = prisma.event.create ({
             data: {eventID: 1, eventObject: {eventname: 'Event 1', people: 2, interval: 2, length: 20, time: 0}, 
-                    templateObject: {questionArray: [{type: "open", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
+                    templateObject: {questionArray: [{type: "text", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
                     , attKey: 941, hostKey: 1041}
         });
         const e2 = prisma.event.create ({
             data: {eventID: 2, eventObject: {eventname: 'Event 2', people: 1, interval: 12, length: 120, time: 0}, 
-                    templateObject: {questionArray: [{type: "open", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
+                    templateObject: {questionArray: [{type: "text", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
                     , attKey: 942, hostKey: 1042}
         });
         const e3 = prisma.event.create ({
             data: {eventID: 3, eventObject: {eventname: 'Event 3', people: 100, interval: 30, length: 600, time: 0}, 
-                    templateObject: {questionArray: [{type: "open", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
+                    templateObject: {questionArray: [{type: "text", description: "How is the event?"}]}, forumObject: {},  analysisObject: {moodArray: emptyArray, currentMood: 0, selectedInterval: 0, length: 0, mostRecentResponse: newMap}
                     , attKey: 943, hostKey: 1043}
         });
         //create users

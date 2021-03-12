@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { userEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router, MemoryRouter, Route, useHistory } from 'react-router-dom';
 import Home from '../Home';
+import userEvent from "@testing-library/user-event";
+import useStateMock from 'react';
 
 describe("<Home />", () => {
   it("renders without crash", () => {
