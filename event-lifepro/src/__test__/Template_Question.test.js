@@ -1,15 +1,12 @@
 var Template = require('../Template.js');
 var Question = require('../Question.js');
 
-describe("Question class", () => {
-    it("constructor", () => {
+describe("Template class", () => {
+    it("Question class works", () => {
         const newQuestion = new Question("open", "How is the event?");
         expect(newQuestion.type).toBe("open");
         expect(newQuestion.description).toBe("How is the event?");
     });
-});
-
-describe("Template class", () => {
     const Q1 = new Question("open", "How is the event?");
     const Q2 = new Question("select", "Can you hear the speaker?");
     const Q3 =  new Question("open", "Which part was your favourite?");

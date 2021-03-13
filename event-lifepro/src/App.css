@@ -66,12 +66,12 @@
   height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: space-evenly; 
   align-items: center;
 }
 
 .accessTitle {
-  margin: 100px;
+  margin: 50px;
 }
 
 .EventCreate{

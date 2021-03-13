@@ -78,7 +78,7 @@ function Home(){
         <button className="homeButton" onClick={() => checkValid(attKey, "attendee")} data-testid="AttendeeLogin">
           Login
         </button>
-        <p>{validAtt}</p>
+        {validAtt}
       </div>
     </div>
   );
