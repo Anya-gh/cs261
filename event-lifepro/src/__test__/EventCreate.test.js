@@ -29,7 +29,7 @@ describe("<EventCreate />", () => {
         
         /*userEvent.selectOptions(screen.getByLabelText("Import a Template:"), "1");
         userEvent.click(screen.getByText("Import Template"));
-        expect(screen.getByText("How is the event?")).not.toBeNull();*/
+        expect(screen.getByText("How is the event?")).not.toBeNull();*/ // template loading was not implemented
 
         userEvent.type(screen.getByPlaceholderText("Enter your question here"), "My new question?");
         userEvent.click(screen.getByText("+"));

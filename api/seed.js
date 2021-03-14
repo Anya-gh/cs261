@@ -45,10 +45,10 @@ const populate = async () => {
             data: {responseID: 1112, eventID: 1111, userID: 1112, responseObject: {time: 1615628804967, interval: 0, answers: [{content: "It is boring.", questionID: 0}], mood: -0.5, name: "Test User 2", context: "no ctx"}}
         });
         const r2 = prisma.response.create ({
-            data: {responseID: 1113, eventID: 1113, userID: 1113, responseObject: {time: 1615628804968, interval: 0, answers: [{content: "Yes", questionID: 0}], mood: 0.5, name: "Test User 3", context: "no ctx"}}
+            data: {responseID: 1113, eventID: 1113, userID: 1113, responseObject: {time: 1615628804968, interval: 0, answers: [{content: "0", questionID: 0}], mood: 0.5, name: "Test User 3", context: "no ctx"}}
         });
         const r3 = prisma.response.create ({
-            data: {responseID: 1114, eventID: 1113, userID: 1113, responseObject: {time: 1615628805066, interval: 0, answers: [{content: "No", questionID: 0}], mood: -0.5, name: "Test User 3", context: "no ctx"}}
+            data: {responseID: 1114, eventID: 1113, userID: 1113, responseObject: {time: 1615628805066, interval: 0, answers: [{content: "1", questionID: 0}], mood: -0.5, name: "Test User 3", context: "no ctx"}}
         });
         const transaction = await prisma.$transaction([e1,e2,e3,u1,u2,u3,r0,r1,r2,r3]);
     } catch(e) {
@@ -57,5 +57,5 @@ const populate = async () => {
         prisma.$disconnect();
     }
 };
-
+//populate();
 exports.populate = populate;

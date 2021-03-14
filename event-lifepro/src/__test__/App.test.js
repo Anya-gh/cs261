@@ -12,7 +12,7 @@ describe("<App />", () => {
         render(<Router><App /></Router>);
     });
 
-    it("redirects to EventCreate page, then to Review page", async () => {
+    it("redirects to EventCreate page, creates new event and redirects to Review page", async () => {
         let location
         render(
           <MemoryRouter initialEntries={["/"]}>
@@ -29,7 +29,7 @@ describe("<App />", () => {
           </MemoryRouter>
         );
 
-        fireEvent.click(screen.getByText("Create new event"));
+        act(() => userEvent.click(screen.getByText("Create new event")));
         expect(location.pathname).toEqual("/EventCreate");
 
         const mockSuccessResponse1 = {hostKey: 1041, attKey: 971};
@@ -48,24 +48,26 @@ describe("<App />", () => {
         });
         jest.spyOn(window, 'fetch').mockImplementationOnce(() => mockFetchPromise2);
 
-        fireEvent.change(screen.getByLabelText("Enter title of the event:"), { target: { value: 'Test Title' } })
-        fireEvent.change(screen.getByLabelText("Enter the length of the event:"), { target: { value: '60' } })
-        fireEvent.change(screen.getByLabelText("Choose a type of event:"), { target: { value: '1' } })
-        fireEvent.change(screen.getByLabelText("Choose analysis frequency:"), { target: { value: '5' } })
-        fireEvent.change(screen.getByLabelText("Choose number of people attending:"), { target: { value: '30' } })
-        fireEvent.change(screen.getByLabelText("Import a Template:"), { target: { value: '1' } })
-        fireEvent.change(screen.getByPlaceholderText("Enter your question here"), { target: { value: 'Test question?' } })
-        fireEvent.change(screen.getByTestId("Qtype"), { target: { value: 'text' } })
-        fireEvent.click(screen.getByRole("button", {name: "+"}))
-        fireEvent.click(screen.getByText("Create new event"))
+        await waitFor(() => expect(screen.getByText("All fields are required.")).not.toBeNull());
+        await act( async () => userEvent.type(screen.getByLabelText("Enter title of the event:"), 'Test Title'));
+        await act( async () => userEvent.type(screen.getByLabelText("Enter the length of the event:"), '60'));
+        await act( async () => userEvent.type(screen.getByLabelText("Choose a type of event:"), '1'));
+        await act( async () => userEvent.type(screen.getByLabelText("Choose analysis frequency:"), '5'));
+        await act( async () => userEvent.type(screen.getByLabelText("Choose number of people attending:"), '30'));
+        await act( async () => userEvent.type(screen.getByLabelText("Import a Template:"), '1'));
+        await act( async () => userEvent.type(screen.getByPlaceholderText("Enter your question here"), 'Test question?'));
+        await act( async () => userEvent.type(screen.getByTestId("Qtype"), 'text'));
+        await act( async () => userEvent.click(screen.getByRole("button", {name: "+"})));
+        expect(screen.queryByText("All fields are required.")).toBeNull();
+        await act( async () => userEvent.click(screen.getByText("Create new event")));
         await waitFor(() => expect(location.pathname).toMatch(new RegExp("^/review/104")));
 
         const prisma = new PrismaClient();
         const r1 = await prisma.event.findMany({where: {}});
         const prev_length = r1.length;
-        await backend.createNewSession("Test Title", 30, 5, 60, Date.now(), ["text"], ["Test question?"]);
+        await backend.createNewSession("Test Title", 30, 5, 60, Date.now(), ["text"], ["Test question?"]); // the api is mocked, so we have to call the backend to create the event
         const r2 = await prisma.event.findMany({where: {}});
-        expect(r2).toHaveLength(prev_length+1);  // would be prev_length+1, but api is mocked so DB is not updated
+        expect(r2).toHaveLength(prev_length+1); 
         await prisma.$disconnect();
 
       });
@@ -105,8 +107,8 @@ describe("<App />", () => {
         });
         jest.spyOn(window, 'fetch').mockImplementationOnce(() => mockFetchPromise2)
 
-        fireEvent.change(screen.getByTestId("HostKeyInput"), { target: { value: '1041' } });
-        fireEvent.click(screen.getByTestId("HostLogin"));
+        await act( async () => userEvent.type(screen.getByTestId("HostKeyInput"), '1041'));
+        await act( async () => userEvent.click(screen.getByTestId("HostLogin")));;
         await waitFor(() => expect(location.pathname).toEqual("/review/1041"));
       });
 
@@ -127,38 +129,38 @@ describe("<App />", () => {
           </MemoryRouter>
         );
 
-        await act( async () => {
-          const mockSuccessResponse1 = "Key is invalid. Please try again.";
-          const mockJsonPromise1 = Promise.resolve(mockSuccessResponse1);
-          const mockFetchPromise1 = Promise.resolve({ 
-            json: () => mockJsonPromise1,
-          });
-          jest.spyOn(window, 'fetch').mockImplementation(() => mockFetchPromise1);
+        
+        const mockSuccessResponse1 = "Key is invalid. Please try again.";
+        const mockJsonPromise1 = Promise.resolve(mockSuccessResponse1);
+        const mockFetchPromise1 = Promise.resolve({ 
+          json: () => mockJsonPromise1,
         });
+        jest.spyOn(window, 'fetch').mockImplementation(() => mockFetchPromise1);
+        
 
-        fireEvent.change(screen.getByTestId("HostKeyInput"), { target: { value: '999' } }); //999 is an invalid host key
-        fireEvent.click(screen.getByTestId("HostLogin"));
+        await act( async () => userEvent.type(screen.getByTestId("HostKeyInput"), '999')); //999 is an invalid host key
+        await act( async () => userEvent.click(screen.getByTestId("HostLogin")));
         await waitFor(() => expect(location.pathname).toEqual("/"));
         await waitFor(() => expect(screen.getByText("Key is invalid. Please try again.")).not.toBeNull());
       });
 
       it("redirects to Feedback/AttendeeKey page for valid key+name and feedback submission works", async () => {
         await act( async () => {
-        let location
-        render(
-          <MemoryRouter initialEntries={["/"]}>
-            <Route path="/">
-              <App />
-            </Route>
-            <Route
-              path="/*"
-              render={({ location: loc }) => {
-                location = loc
-                return null
-              }}
-            />
-          </MemoryRouter>
-        );
+          let location
+          render(
+            <MemoryRouter initialEntries={["/"]}>
+              <Route path="/">
+                <App />
+              </Route>
+              <Route
+                path="/*"
+                render={({ location: loc }) => {
+                  location = loc
+                  return null
+                }}
+              />
+            </MemoryRouter>
+          );
         
           const mockSuccessResponse1 = "";
           const mockJsonPromise1 = Promise.resolve(mockSuccessResponse1);
@@ -182,31 +184,33 @@ describe("<App />", () => {
           });
           jest.spyOn(window, 'fetch').mockImplementationOnce(() => mockFetchPromise3);
         
-        await act( async () => {
-        fireEvent.change(screen.getByTestId("AttendeeKeyInput"), { target: { value: "971" }});
-        fireEvent.change(screen.getByTestId("AttendeeNameInput"), { target: { value: 'Test Name' } });
-        });
-        userEvent.click(screen.getByTestId("AttendeeLogin"))
-        await waitFor(() => expect(location.pathname).toEqual("/feedback/971/Test Name"));
+          await act( async () => {
+            userEvent.type(screen.getByTestId("AttendeeKeyInput"), "971")
+            userEvent.type(screen.getByTestId("AttendeeNameInput"), 'Test Name')
+          });
+          await act( async () => userEvent.click(screen.getByTestId("AttendeeLogin")));
+          await waitFor(() => expect(location.pathname).toEqual("/feedback/971/Test Name"));
 
-        /*const prisma = new PrismaClient();
-        const r1 = await prisma.response.findMany({where: {eventID: 1111}});
-        const prev_length = r1.length;*/
-        await new Promise((r) => setTimeout(r, 1000));
+          /*const prisma = new PrismaClient();
+          const r1 = await prisma.response.findMany({where: {eventID: 1111}});
+          const prev_length = r1.length;*/
+          await new Promise((r) => setTimeout(r, 1000));
 
-        const answerBoxes = screen.getAllByRole("textbox");
-        expect(answerBoxes).toHaveLength(2);
-        const i = 1;
-        for (const box of answerBoxes) {
-          if (i < answerBoxes.length+1) {
-            fireEvent.change(box, { target: { value: "answer".concat(i.toString()) } });
+          const answerBoxes = screen.getAllByRole("textbox");
+          expect(answerBoxes).toHaveLength(2);
+          const i = 1;
+          for (const box of answerBoxes) {
+            if (i < answerBoxes.length+1) {
+              await act( async () => userEvent.type(box, "answer".concat(i.toString())));
+            }
           }
-        }
-        fireEvent.click(screen.getByText("Submit"))
+          await act( async () => userEvent.click(screen.getByText("Submit")));
+          await waitFor(() => expect(screen.getByText("Thank you for your submission!")).not.toBeNull());
+          await waitFor(() => expect(screen.getByText("You may submit again to update your feedback.")).not.toBeNull());
 
-        /*const r2 = await prisma.response.findMany({where: {eventID: 1111}});
-        expect(r2).toHaveLength(prev_length);  // would be prev_length+1, but api is mocked so DB is not updated
-        prisma.$disconnect();*/
+          /*const r2 = await prisma.response.findMany({where: {eventID: 1111}});
+          expect(r2).toHaveLength(prev_length);  // would be prev_length+1, but api is mocked so DB is not updated
+          prisma.$disconnect();*/
         });
       });
 
@@ -227,21 +231,20 @@ describe("<App />", () => {
           </MemoryRouter>
         );
 
-        act(() => {
-          const mockSuccessResponse1 = "Key is invalid. Please try again.";
-          const mockJsonPromise1 = Promise.resolve(mockSuccessResponse1);
-          const mockFetchPromise1 = Promise.resolve({ 
-            json: () => mockJsonPromise1,
-          });
-          jest.spyOn(window, 'fetch').mockImplementation(() => mockFetchPromise1);
+        
+        const mockSuccessResponse1 = "Key is invalid. Please try again.";
+        const mockJsonPromise1 = Promise.resolve(mockSuccessResponse1);
+        const mockFetchPromise1 = Promise.resolve({ 
+          json: () => mockJsonPromise1,
         });
+        jest.spyOn(window, 'fetch').mockImplementation(() => mockFetchPromise1);
 
         await act( async () => {
-          fireEvent.change(screen.getByTestId("AttendeeKeyInput"), { target: { value: '9999' } }); //999 is an invalid key
-          fireEvent.change(screen.getByTestId("AttendeeNameInput"), { target: { value: 'Test Name' } });
-          fireEvent.click(screen.getByTestId("AttendeeLogin"));
-          await waitFor(() => expect(location.pathname).toEqual("/"));
-          await waitFor(() => expect(screen.getByText("Key is invalid. Please try again.")).not.toBeNull());
+          userEvent.type(screen.getByTestId("AttendeeKeyInput"), '9999') //999 is an invalid key
+          userEvent.type(screen.getByTestId("AttendeeNameInput"), 'Test Name')
+          userEvent.click(screen.getByTestId("AttendeeLogin"))
         });
+        await waitFor(() => expect(location.pathname).toEqual("/"));
+        await waitFor(() => expect(screen.getByText("Key is invalid. Please try again.")).not.toBeNull());
       });
 });

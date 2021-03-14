@@ -1,7 +1,7 @@
 const { PrismaClient } = require('../../../api/node_modules/@prisma/client');
 import seed from '../../../api/seed';
 
-test("Database", async () => {
+test("Database functionalities", async () => {
     const prisma = new PrismaClient();
     const p = await seed.populate();
     const emptyArray = [];
@@ -29,9 +29,9 @@ test("Database", async () => {
     const r2 = await prisma.response.findUnique({where: {responseID: 1112}});
     expect(r2).toEqual({responseID: 1112, eventID: 1111, userID: 1112, responseObject: {time: 1615628804967, interval: 0, answers: [{content: "It is boring.", questionID: 0}], mood: -0.5, name: "Test User 2", context: "no ctx"}});
     const r3 = await prisma.response.findUnique({where: {responseID: 1113}});
-    expect(r3).toEqual({responseID: 1113, eventID: 1113, userID: 1113, responseObject: {time: 1615628804968, interval: 0, answers: [{content: "Yes", questionID: 0}], mood: 0.5, name: "Test User 3", context: "no ctx"}});
+    expect(r3).toEqual({responseID: 1113, eventID: 1113, userID: 1113, responseObject: {time: 1615628804968, interval: 0, answers: [{content: "0", questionID: 0}], mood: 0.5, name: "Test User 3", context: "no ctx"}});
     const r4 = await prisma.response.findUnique({where: {responseID: 1114}});
-    expect(r4).toEqual({responseID: 1114, eventID: 1113, userID: 1113, responseObject: {time: 1615628805066, interval: 0, answers: [{content: "No", questionID: 0}], mood: -0.5, name: "Test User 3", context: "no ctx"}});
+    expect(r4).toEqual({responseID: 1114, eventID: 1113, userID: 1113, responseObject: {time: 1615628805066, interval: 0, answers: [{content: "1", questionID: 0}], mood: -0.5, name: "Test User 3", context: "no ctx"}});
     
     await prisma.$disconnect();
 });
