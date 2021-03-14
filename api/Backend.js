@@ -112,8 +112,9 @@ async function createNewResponse(eventID, userID, answerArray, name, context, mo
 
     var newResponseObj = new Response(answerArray, eventObj.time, eventObj.interval, name, context, mood);
     await Response.calculateMood(newResponseObj);
-    userEventResponses = await findUserEventResponses(eventID, userID);
-    newResponseID = -1;
+    const userEventResponses = await findUserEventResponses(eventID, userID);
+    var newResponseID = -1;
+    var oldResponseObj = null;
     if (userEventResponses) {
         for (var i = 0; i < userEventResponses.length; i++) {
             oldResponseObj = userEventResponses[i].responseObject
@@ -223,7 +224,7 @@ async function getAnalysisObject(eventIDparam) {
             analysisObject: true
         }
     })
-    analysisObj = eventObj.analysisObject;
+    var analysisObj = eventObj.analysisObject;
 
     await Analysis.convertObjectToMap(analysisObj);
 

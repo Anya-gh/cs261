@@ -66,7 +66,7 @@ describe("<App />", () => {
         await backend.createNewSession("Test Title", 30, 5, 60, Date.now(), ["text"], ["Test question?"]);
         const r2 = await prisma.event.findMany({where: {}});
         expect(r2).toHaveLength(prev_length+1);  // would be prev_length+1, but api is mocked so DB is not updated
-        prisma.$disconnect();
+        await prisma.$disconnect();
 
       });
 
@@ -192,7 +192,7 @@ describe("<App />", () => {
         /*const prisma = new PrismaClient();
         const r1 = await prisma.response.findMany({where: {eventID: 1111}});
         const prev_length = r1.length;*/
-        await new Promise((r) => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 1000));
 
         const answerBoxes = screen.getAllByRole("textbox");
         expect(answerBoxes).toHaveLength(2);
